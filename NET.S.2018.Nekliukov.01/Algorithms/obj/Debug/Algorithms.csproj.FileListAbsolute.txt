@@ -1,0 +1,14 @@
+D:\github\NET.S.2018.Nekliukov.01\Algorithms\bin\Debug\Algorithms.dll
+D:\github\NET.S.2018.Nekliukov.01\Algorithms\bin\Debug\Algorithms.pdb
+D:\github\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.csprojAssemblyReference.cache
+D:\github\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.csproj.CoreCompileInputs.cache
+D:\github\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.dll
+D:\github\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\bin\Debug\Algorithms.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\bin\Debug\Algorithms.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\bin\Debug\MathsGAC.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.csprojAssemblyReference.cache
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.csproj.CoreCompileInputs.cache
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.csproj.CopyComplete
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\Algorithms\obj\Debug\Algorithms.pdb

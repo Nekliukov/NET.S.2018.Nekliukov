@@ -1,0 +1,14 @@
+D:\github\NET.S.2018.Nekliukov.01\MathsGAC\bin\Debug\MathsGAC.dll
+D:\github\NET.S.2018.Nekliukov.01\MathsGAC\bin\Debug\MathsGAC.pdb
+D:\github\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.csproj.CoreCompileInputs.cache
+D:\github\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.dll
+D:\github\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\bin\Debug\MathsGAC.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\bin\Debug\MathsGAC.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\bin\Debug\Algorithms.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\bin\Debug\Algorithms.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.csprojAssemblyReference.cache
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.csproj.CoreCompileInputs.cache
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.csproj.CopyComplete
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.01\MathsGAC\obj\Debug\MathsGAC.pdb
