@@ -1,0 +1,7 @@
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\bin\Debug\TasksLibDay2.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\bin\Debug\TasksLibDay2.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\obj\Debug\TasksLibDay2.csprojAssemblyReference.cache
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\obj\Debug\TasksLibDay2.csproj.CoreCompileInputs.cache
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\obj\Debug\TasksLibDay2.dll
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\obj\Debug\TasksLibDay2.pdb
+D:\github\NET.S.2018.Nekliukov\NET.S.2018.Nekliukov.02\TasksLibDay2\bin\Debug\TasksLibDay2.xml

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TasksLibDay2</name>
+    </assembly>
+    <members>
+        <member name="T:TasksLibDay2.Tasks">
+            <summary>
+            Main static class for Day2's tasks solutions
+            Consist of two algorithms (#1 and #6 tasks)
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TasksLibDay2.Tasks.FilterDigit(System.Int32[],System.Int32)" -->
+    </members>
+</doc>
