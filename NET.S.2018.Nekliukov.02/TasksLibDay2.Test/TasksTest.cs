@@ -11,9 +11,9 @@ namespace TasksLibDay2.Test
         public void FilterDigit_7RandomNumbers_3FilteredNumbersExpected()
         {
             // arrange
-            int[] test = { 54, 11, 647, 1, 45, 5, 10 };
+            int[] test = { 54, 11, 647, 1, -45, 5, 10 };
             int digit = 5;
-            int[] expected = { 54, 45, 5 };
+            int[] expected = { 54, -45, 5 };
 
             // action
             int[] actual = Tasks.FilterDigit(test, digit);

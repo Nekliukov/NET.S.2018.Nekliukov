@@ -10,6 +10,14 @@
             Consist of two algorithms (#1 and #6 tasks)
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:TasksLibDay2.Tasks.FilterDigit(System.Int32[],System.Int32)" -->
+        <member name="M:TasksLibDay2.Tasks.FilterDigit(System.Int32[],System.Int32)">
+            Filter of an int array by existion of choosen digit
+            <param name="initArray">Initial array of numbers</param>
+            <param name="digit">Digit, that initial array's numbers must contain</param>
+            <returns>Array of filtered numbers</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when null comes as an array</exception>
+            <exception cref="T:System.ArgumentException">Thrown when we get an empty array</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the sencond parametr is not a digit (must be 0..9)</exception>
+        </member>
     </members>
 </doc>

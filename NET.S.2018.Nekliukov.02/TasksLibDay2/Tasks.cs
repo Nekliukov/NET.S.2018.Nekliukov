@@ -29,7 +29,7 @@ namespace TasksLibDay2 {
                 curNum = initArray[i];
                 //// Algorithm of separating number on digits
                 while (curNum != 0) {
-                    if (curNum % 10 == digit) {
+                    if (Math.Abs(curNum % 10) == Math.Abs(digit)) {
                         result.Add(initArray[i]);
                         break;
                     }
