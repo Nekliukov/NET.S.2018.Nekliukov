@@ -6,18 +6,34 @@
     <members>
         <member name="T:TasksLibDay2.Tasks">
             <summary>
-            Main static class for Day2's tasks solutions
-            Consist of two algorithms (#1 and #6 tasks)
+            Main static class for Day2's tasks solutions 
+            Consist of two algorithms (#1 and #6 tasks) 
             </summary>
         </member>
         <member name="M:TasksLibDay2.Tasks.FilterDigit(System.Int32[],System.Int32)">
             Filter of an int array by existion of choosen digit
-            <param name="initArray">Initial array of numbers</param>
-            <param name="digit">Digit, that initial array's numbers must contain</param>
-            <returns>Array of filtered numbers</returns>
+            <param name="initArray">Initial array of numbers </param>
+            <param name="digit">Digit, that initial array's numbers must contain </param>
+            <returns>Array of filtered numbers </returns>
             <exception cref="T:System.ArgumentNullException">Thrown when null comes as an array</exception>
             <exception cref="T:System.ArgumentException">Thrown when we get an empty array</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the sencond parametr is not a digit (must be 0..9)</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the sencond parametr is 
+            not a digit (must be 0..9)</exception>
+        </member>
+        <member name="M:TasksLibDay2.Tasks.InsertNumber(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            This method works with bits. It inserts in source value's range of bits, 
+            number of first bits from the second array.
+            </summary>
+            <param name="numberSource">Source number</param>
+            <param name="numberIn">Number from which we will take range of bits </param>
+            <param name="fromBitNum">Position to copy bits from</param>
+            <param name="toBitNum">Position to copy bits to </param>
+            <returns>Integer value after bits manipulation</returns>
+            <exception cref="T:System.ArgumentException">Thrown when position from which ew want 
+            to copy bits is higher when destination</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when one of the arguments is
+            outside the bits range (not in 0..31) </exception>
         </member>
     </members>
 </doc>
