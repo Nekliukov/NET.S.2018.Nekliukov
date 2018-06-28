@@ -7,7 +7,8 @@ namespace TasksLibDay2
     /// Main static class for Day2's tasks solutions 
     /// Consist of two algorithms (#1 and #6 tasks) 
     /// </summary>
-    public static class Tasks {
+    public static class Tasks
+    {
         /// Filter of an int array by existion of choosen digit
         /// <param name="initArray">Initial array of numbers </param>
         /// <param name="digit">Digit, that initial array's numbers must contain </param>
@@ -16,29 +17,44 @@ namespace TasksLibDay2
         /// <exception cref="ArgumentException">Thrown when we get an empty array</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the sencond parametr is 
         /// not a digit (must be 0..9)</exception>
-        public static int[] FilterDigit(int[] initArray, int digit) {
+        public static int[] FilterDigit(int[] initArray, int digit)
+        {
             if (initArray == null)
+            {
                 throw new ArgumentNullException();
+            }
+
             if (initArray.Length == 0)
+            {
                 throw new ArgumentException();
+            }
+
             if (digit < 0 || digit > 9)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             // List of future founded numbers
             List<int> result = new List<int>();
             int curNum;
-            for (int i = 0; i < initArray.Length; i++) {
+            for (int i = 0; i < initArray.Length; i++)
+            {
                 curNum = initArray[i];
                 //// Algorithm of separating number on digits
-                while (curNum != 0) {
-                    if (Math.Abs(curNum % 10) == digit) {
+                while (curNum != 0)
+                {
+                    if (Math.Abs(curNum % 10) == digit)
+                    {
                         result.Add(initArray[i]);
                         break;
                     }
                     else
+                    {
                         curNum /= 10;
+                    }
                 }
             }
+
             return result.ToArray();
         }
 
@@ -55,46 +71,71 @@ namespace TasksLibDay2
         /// to copy bits is higher when destination</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when one of the arguments is
         /// outside the bits range (not in 0..31) </exception>
-        public static int InsertNumber(int numberSource, int numberIn,
-                                        int fromBitNum, int toBitNum) {
+        public static int InsertNumber(int numberSource, int numberIn, int fromBitNum, int toBitNum)
+        {
             if (toBitNum < fromBitNum)
+            {
                 throw new ArgumentException();
+            }
+
             if ((toBitNum > 31 || toBitNum < 0) || (fromBitNum > 31 || fromBitNum < 0))
+            {
                 throw new ArgumentOutOfRangeException();
+            }
+
             char[] bitsSource = ConvertTo32bits(numberSource);
             char[] bitsIn = ConvertTo32bits(numberIn);
             int curBitNum = 0;
             for (int i = fromBitNum; i <= toBitNum; i++, curBitNum++)
+            {
                 bitsSource[i] = bitsIn[curBitNum];
+            }
+
             return ConvertToInt(bitsSource);
         }
 
         // Converts Int32 to bits and reverses it to "higher<-lower"
         // bits format
-        private static char[] ConvertTo32bits(int number){
+        private static char[] ConvertTo32bits(int number)
+        {
             string snumber = Convert.ToString(number, 2);
-            string temp = "";
-            for (int i = snumber.Length-1; i >= 0; i--)
+            string temp = string.Empty;
+            for (int i = snumber.Length - 1; i >= 0; i--)
+            {
                 temp += snumber[i];
+            }
+
             for (int i = temp.Length; i < 32; i++)
+            {
                 temp += '0';
+            }
+
             return temp.ToCharArray(0, temp.Length);
         }
 
         // Reverses bits in format to convert it in Int32
-        private static int ConvertToInt(char[] number){
-            string temp = "";
+        private static int ConvertToInt(char[] number)
+        {
+            string temp = string.Empty;
             for (int i = number.Length - 1; i >= 0; i--)
+            {
                 temp += number[i];
-            string result = "";
-            for (int i = 0; i < temp.Length; i++) {
+            }
+
+            string result = string.Empty;
+            for (int i = 0; i < temp.Length; i++)
+            {
                 if (temp[i] == '0')
+                {
                     continue;
-                else {
+                }
+                else
+                {
                     result = temp.Substring(i, temp.Length - i);
                     break;
                 }
             }
+
             return Convert.ToInt32(result, 2);
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TasksLibDay2;
 
 namespace TasksLibDay2.Test
 {
@@ -28,7 +27,7 @@ namespace TasksLibDay2.Test
             // arrange
             int[] test = { 54, 11, 647, 1, 45, 5, 10 };
             int digit = 9;
-            int[] expected = {};
+            int[] expected = { };
 
             // action
             int[] actual = Tasks.FilterDigit(test, digit);
@@ -81,7 +80,7 @@ namespace TasksLibDay2.Test
             int[] actual = Tasks.FilterDigit(test, digit);
         }
 
-        //Tests for InsertNumber
+        ////Tests for InsertNumber
         [TestMethod]
         public void InsertNumber_Source15In15From0To0_15Expected()
             => Assert.AreEqual(Tasks.InsertNumber(15, 15, 0, 0), 15);
