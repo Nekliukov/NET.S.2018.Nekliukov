@@ -10,7 +10,7 @@ namespace Algorithms.Test
         public void MergeSort_5PosNumbers_SortedExpected()
         {
             // arrange
-            int[] testarr =  { 4, 3, 2, 1, 0 };
+            int[] testarr = { 4, 3, 2, 1, 0 };
             int[] expected = { 0, 1, 2, 3, 4 };
 
             // act
@@ -19,6 +19,20 @@ namespace Algorithms.Test
             // assert
             CollectionAssert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void MergeSort_10000Numbers_SortedExpected()
+        {
+            Random rand = new Random();
+            int[] testarr = new int[10000];
+            for (int i = 0; i < testarr.Length; i++)
+            {
+                testarr[i] = rand.Next(int.MinValue, int.MaxValue);
+            }
+
+            int[] actual = Algorithms.ArrayIntExtension.MergeSort(testarr);
+            Assert.IsTrue(IsSorted(actual));
+        }      
 
         [TestMethod]
         public void MergeSort_2Numbers_SortedExpected()
@@ -38,8 +52,8 @@ namespace Algorithms.Test
         public void MergeSort_10PosAndNegNumbers_SortedExpected()
         {
             // arrange
-            int[] testarr  = {4, 2, 1, 5, 74, 23, 7, -7, 0, 1 };
-            int[] expected = {-7, 0, 1, 1, 2, 4, 5, 7, 23, 74 };
+            int[] testarr  = { 4, 2, 1, 5, 74, 23, 7, -7, 0, 1 };
+            int[] expected = { -7, 0, 1, 1, 2, 4, 5, 7, 23, 74 };
 
             // act
             int[] actual = Algorithms.ArrayIntExtension.MergeSort(testarr);
@@ -52,7 +66,7 @@ namespace Algorithms.Test
         public void MergeSort_EmptyArray_ArgumentExceptionExpected()
         {
             // arrange
-            int[] testarr = {};
+            int[] testarr = { };
 
             // act
             int[] actual = Algorithms.ArrayIntExtension.MergeSort(testarr);
@@ -72,13 +86,13 @@ namespace Algorithms.Test
         public void MergeSort_OneElementArray_ReturnedInitialArrayExpected()
         {
             // arrange
-            int[] testarr = {69};
-            int[] expected = {69};
+            int[] testarr = { 69 };
+            int[] expected = { 69 };
 
             // act
             int[] actual = Algorithms.ArrayIntExtension.MergeSort(testarr);
 
-            //assert
+            // assert
             CollectionAssert.Equals(expected, actual);
         }
 
@@ -91,7 +105,7 @@ namespace Algorithms.Test
             int[] expected = { 0, 1, 2, 3, 4 };
 
             // act
-            int[] actual = Algorithms.ArrayIntExtension.Quicksort(testarr, 0, testarr.Length - 1);
+            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
 
             // assert
             CollectionAssert.AreEqual(expected, actual);
@@ -105,10 +119,24 @@ namespace Algorithms.Test
             int[] expected = { -55, 11 };
 
             // act
-            int[] actual = Algorithms.ArrayIntExtension.Quicksort(testarr, 0, testarr.Length - 1);
+            Algorithms.ArrayIntExtension.QuickSort(testarr);
 
             // assert
-            CollectionAssert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, testarr);
+        }
+
+        [TestMethod]
+        public void QuickSort_10000Numbers_SortedExpected()
+        {
+            Random rand = new Random();
+            int[] testarr = new int[10000];
+            for (int i = 0; i < testarr.Length; i++)
+            {
+                testarr[i] = rand.Next(int.MinValue, int.MaxValue);
+            }
+
+            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
+            Assert.IsTrue(IsSorted(actual));
         }
 
         [TestMethod]
@@ -119,7 +147,7 @@ namespace Algorithms.Test
             int[] expected = { -7, 0, 1, 1, 2, 4, 5, 7, 23, 74 };
 
             // act
-            int[] actual = Algorithms.ArrayIntExtension.Quicksort(testarr, 0, testarr.Length - 1);
+            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
 
             // assert
             CollectionAssert.AreEqual(expected, actual);
@@ -132,7 +160,7 @@ namespace Algorithms.Test
             int[] testarr = null;
 
             // act
-            int[] actual = Algorithms.ArrayIntExtension.Quicksort(testarr, 0, 5);
+            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
@@ -142,7 +170,22 @@ namespace Algorithms.Test
             int[] testarr = { };
 
             // act
-            int[] actual = Algorithms.ArrayIntExtension.Quicksort(testarr, 0, 5);
+            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
+        }
+
+        private bool IsSorted(int[] array)
+        {
+            bool sorted = true;
+            for (int i = 0; i < array.Length - 2; i++)
+            {
+                if (array[i + 1] < array[i])
+                {
+                    sorted = false;
+                    break;
+                }
+            }
+
+            return sorted;
         }
     }
 }
