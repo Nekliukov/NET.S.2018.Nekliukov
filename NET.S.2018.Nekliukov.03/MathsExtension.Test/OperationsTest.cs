@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathsExtension.Test
@@ -47,7 +48,46 @@ namespace MathsExtension.Test
              => Operations.FindNthRoot(0.001, -2, 0.0001);
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public void FindNthRoot_0p01_2_Minus1__ArgumentExcpetionExpected()
+        public void FindNthRoot_0p01_2_Minus1_ArgumentExcpetionExpected()
             => Operations.FindNthRoot(0.01, 2, -1);
+
+        [TestMethod]
+        public void FindNextBiggerNum_12_21Expected()
+        {
+            Stopwatch sw = new Stopwatch();
+            Assert.AreEqual(341, Operations.FindNextBiggerNumber(314, out sw));
+        }
+
+        [TestMethod]
+        public void FindNextBiggerNum_513_531Expected()
+            => Assert.AreEqual(531, Operations.FindNextBiggerNumber(513));
+
+        [TestMethod]
+        public void FindNextBiggerNum_3456432_3462345Expected()
+            => Assert.AreEqual(3462345, Operations.FindNextBiggerNumber(3456432));
+
+        [TestMethod]
+        public void FindNextBiggerNum_2017_2071Expected()
+            => Assert.AreEqual(2071, Operations.FindNextBiggerNumber(2017));
+
+        [TestMethod]
+        public void FindNextBiggerNum_654321_Minus1Expected()
+            => Assert.AreEqual(-1, Operations.FindNextBiggerNumber(654321));
+
+        [TestMethod]
+        public void FindNextBiggerNum_1234126_2071Expected()
+            => Assert.AreEqual(1234162, Operations.FindNextBiggerNumber(1234126));
+
+        [TestMethod]
+        public void FindNextBiggerNum_MAXINT_Minus1Expected()
+            => Assert.AreEqual(-1, Operations.FindNextBiggerNumber(int.MaxValue));
+
+        [TestMethod]
+        public void FindNextBiggerNum_9_Minus1Expected()
+            => Assert.AreEqual(-1, Operations.FindNextBiggerNumber(9));
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void FindNextBiggerNum_Minus5_ArgumentExceptionExpected()
+            => Operations.FindNextBiggerNumber(-5);
     }
 }
