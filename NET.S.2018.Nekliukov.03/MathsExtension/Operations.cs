@@ -48,7 +48,6 @@ namespace MathsExtension
 
             return res;
         }
-        #endregion 
 
         /// <summary>
         /// Method for finding next positive bigeer number, that consist of the same digits
@@ -88,7 +87,7 @@ namespace MathsExtension
         /// consist of the same digits and saving of the elapsed time
         /// </summary>
         /// <param name="number">User's number</param>
-        /// <param name="watch">Object for time measuring</param>
+        /// <param name="watch">Structure for time measuring</param>
         /// <returns>Next same digits number + elapsed time</returns>
         public static int FindNextBiggerNumber(int number, out Stopwatch watch)
         {
@@ -118,6 +117,7 @@ namespace MathsExtension
 
             return -1;
         }
+        #endregion 
 
         /// <summary>
         /// Method converts integer type into array of digits
