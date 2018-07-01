@@ -24,8 +24,8 @@ namespace MathsExtension.Test
             => Assert.AreEqual(0.1, actual: Operations.FindNthRoot(0.001, 3, 0.0001), delta: 0.1);
 
         [TestMethod]
-        public void FindNthRoot_NumIs0p0279936DegreeIs7_0p6Expected()
-            => Assert.AreEqual(0.6, actual: Operations.FindNthRoot(0.0279936, 7, 0.0001), delta: 0.1);
+        public void FindNthRoot_NumIs0p0279936DegreeIs1_0p0279936()
+            => Assert.AreEqual(0.0279936, actual: Operations.FindNthRoot(0.0279936, 1, 0.0001), delta: 0.1);
 
         [TestMethod]
         public void FindNthRoot_NumIs0p0081DegreeIs4_0p3Expected()

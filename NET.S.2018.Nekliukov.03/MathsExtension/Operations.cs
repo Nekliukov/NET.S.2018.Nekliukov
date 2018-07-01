@@ -20,14 +20,14 @@ namespace MathsExtension
         /// degree root of negative number</exception>
         public static double FindNthRoot(double number, int degree, double precision)
         {
-            if (degree < 2)
+            if (degree < 1)
             {
-                throw new ArgumentException("Degree must be positive!");
+                throw new ArgumentException("Degree must higher than 0!");
             }
 
-            if (precision <= 0)
+            if (precision <= 0 || precision >= 1)
             {
-                throw new ArgumentException("Precision must be grater than 0");
+                throw new ArgumentException("Precision must be in range of 0..1");
             }
 
             if (number < 0 && degree % 2 == 0)
@@ -36,19 +36,18 @@ namespace MathsExtension
                     " root of negative number ");
             }
 
-            double res = number / 2;
-            double prev = 0;
-            while (Math.Abs(prev - res) >= precision)
+            double currStep = number / 2;
+            double prevStep = 0;
+            while (Math.Abs(prevStep - currStep) >= precision)
             {
-                prev = res;
-                //// iteration rule of the Newton's method
-                res = (1.0 / degree) * ((degree - 1) * res + number /
-                    Math.Pow(res, degree - 1));
+                prevStep = currStep;
+                currStep = (1.0 / degree) * ((degree - 1) * currStep + number /
+                    Math.Pow(currStep, degree - 1));
             }
 
-            return res;
+            return currStep;
         }
-        #endregion 
+        
 
         /// <summary>
         /// Method for finding next positive bigeer number, that consist of the same digits
@@ -97,6 +96,7 @@ namespace MathsExtension
             watch.Stop();
             return result;
         }
+        #endregion 
 
         #region private API
         /// <summary>
