@@ -13,9 +13,9 @@ namespace MathsExtension
         /// <param name="degree">Root's degree</param>
         /// <param name="precision">Eps of the evaluation</param>
         /// <returns>Nth degree root</returns>
-        /// <exception cref="ArgumentException">Thrown when degree is lower than 2</exception>
+        /// <exception cref="ArgumentException">Thrown when degree is lower than 1</exception>
         /// <exception cref="ArgumentException">Thrown when precision is lower
-        /// than or equal to 0</exception>
+        /// than 0 or higher than 1</exception>
         /// <exception cref="ArgumentException">Thrown when you try to take odd
         /// degree root of negative number</exception>
         public static double FindNthRoot(double number, int degree, double precision)
@@ -47,7 +47,6 @@ namespace MathsExtension
 
             return currStep;
         }
-        
 
         /// <summary>
         /// Method for finding next positive bigeer number, that consist of the same digits
@@ -87,7 +86,7 @@ namespace MathsExtension
         /// consist of the same digits and saving of the elapsed time
         /// </summary>
         /// <param name="number">User's number</param>
-        /// <param name="watch">Object for time measuring</param>
+        /// <param name="watch">Structure for time measuring</param>
         /// <returns>Next same digits number + elapsed time</returns>
         public static int FindNextBiggerNumber(int number, out Stopwatch watch)
         {
