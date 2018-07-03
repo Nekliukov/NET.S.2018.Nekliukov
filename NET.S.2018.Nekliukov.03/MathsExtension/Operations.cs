@@ -5,7 +5,7 @@ namespace MathsExtension
 {
     public class Operations
     {
-        #region public API
+        #region Public API
         /// <summary>
         /// Method for evaluating of the fractional numbers Nth degree root
         /// </summary>
@@ -13,9 +13,9 @@ namespace MathsExtension
         /// <param name="degree">Root's degree</param>
         /// <param name="precision">Eps of the evaluation</param>
         /// <returns>Nth degree root</returns>
-        /// <exception cref="ArgumentException">Thrown when degree is lower than 1</exception>
+        /// <exception cref="ArgumentException">Thrown when degree is lower than 2</exception>
         /// <exception cref="ArgumentException">Thrown when precision is lower
-        /// than 0 or higher than 1</exception>
+        /// than or equal to 0</exception>
         /// <exception cref="ArgumentException">Thrown when you try to take odd
         /// degree root of negative number</exception>
         public static double FindNthRoot(double number, int degree, double precision)
@@ -47,7 +47,7 @@ namespace MathsExtension
 
             return currStep;
         }
-
+        
         /// <summary>
         /// Method for finding next positive bigeer number, that consist of the same digits
         /// </summary>
@@ -86,7 +86,7 @@ namespace MathsExtension
         /// consist of the same digits and saving of the elapsed time
         /// </summary>
         /// <param name="number">User's number</param>
-        /// <param name="watch">Structure for time measuring</param>
+        /// <param name="watch">Object for time measuring</param>
         /// <returns>Next same digits number + elapsed time</returns>
         public static int FindNextBiggerNumber(int number, out Stopwatch watch)
         {
@@ -95,9 +95,163 @@ namespace MathsExtension
             watch.Stop();
             return result;
         }
-        #endregion 
 
-        #region private API
+        /// <summary>
+        /// Method for evaluating of greatest common divisior of two numbers
+        /// using Euclid algorithm
+        /// </summary>
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <returns>GCD of two numbers</returns>
+        public static int FindGCDEuclid(int firstNum, int secondNum)
+        {
+            ConvertToAbsolute(ref firstNum, ref secondNum);
+
+            while (firstNum != 0 && secondNum != 0)
+            {
+                if (firstNum > secondNum)
+                {
+                    firstNum %= secondNum;
+                }
+                else
+                {
+                    secondNum %= firstNum;
+                }
+            }
+
+            return (firstNum == 0) ? secondNum : firstNum;
+        }
+
+        /// <summary>
+        /// Overloaded method for finding next positive bigeer number, that
+        /// consist of the same digits and saving of the elapsed time
+        /// </summary>
+        /// <param name="number">User's number</param>
+        /// <param name="watch">Object for time measuring</param>
+        /// <returns>Next same digits number + elapsed time</returns>
+        public static int FindGCDEuclid(int number, out Stopwatch watch)
+        {
+            watch = Stopwatch.StartNew();
+            int result = FindNextBiggerNumber(number);
+            watch.Stop();
+            return result;
+        }
+
+        /// <summary>
+        /// Overloaded method for evaluating of greatest common divisior of
+        /// 2+ numbers using Euclid algorithm
+        /// </summary>
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <param name="nums">List of other numbers</param>
+        /// <returns>GCD of more than 2 numbers</returns>
+        public static int FindGCDEuclid(int firstNum, int secondNum, params int[] nums)
+        {         
+            Array.Resize(ref nums, nums.Length + 2);
+            int arrLen = nums.Length;
+            nums[arrLen - 1] = firstNum;
+            nums[arrLen - 2] = secondNum;
+
+            int currGCD = 0;
+            for (int i = 0; i < arrLen; i++)
+            {
+                currGCD = FindGCDEuclid(currGCD, nums[i]);
+            }
+
+            return currGCD;
+        }
+
+        /// <summary>
+        /// Method for evaluating of greatest common divisior of two numbers
+        /// using Binary algorithm
+        /// </summary>
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <returns>GCD of more than 2 numbers</returns>
+        public static int FindGCDBinary(int firstNum, int secondNum)
+        {
+            ConvertToAbsolute(ref firstNum, ref secondNum);
+            return BinaryGCD(firstNum, secondNum);        
+        }
+
+        /// <summary>
+        /// Overloaded method for evaluating of greatest common divisior of
+        /// 2+ numbers using Binary algorithm
+        /// </summary>
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <param name="nums">List of other numbers</param>
+        /// <returns>GCD of more than 2 numbers</returns>
+        public static int FindGCDBinary(int firstNum, int secondNum, params int[] nums)
+        {
+            Array.Resize(ref nums, nums.Length + 2);
+            int arrLen = nums.Length;
+            nums[arrLen - 1] = firstNum;
+            nums[arrLen - 2] = secondNum;
+
+            int currGCD = 0;
+            for (int i = 0; i < arrLen; i++)
+            {
+                currGCD = FindGCDBinary(currGCD, nums[i]);
+            }
+
+            return currGCD;
+        }
+
+        #region Testing methods
+        /// <summary>
+        /// Method for testing execution time of GCD methods with 2 args
+        /// </summary>
+        /// <param name="GCD">Choosen method</param>
+        /// <param name="firstNumber">First integer value</param>
+        /// <param name="secondNumber">Second integer value</param>
+        /// <returns>Structure with information about the execution time</returns>
+        public static Stopwatch GetGCDExecutionTime(Func<int, int, int> GCD, int firstNumber,
+            int secondNumber)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            int result = GCD(firstNumber, secondNumber);
+            watch.Stop();
+            return watch;
+        }
+
+        /// <summary>
+        /// Method for testing execution time of GCD methods with more than 2 args
+        /// </summary>
+        /// <param name="GCD">Choosen method</param>
+        /// <param name="firstNumber">First integer value</param>
+        /// <param name="secondNumber">Second integer value</param>
+        /// <param name="nums">List of other nums</param>
+        /// <returns>Structure with information about the execution time</returns>
+        public static Stopwatch GetGCDExecutionTime(Func<int, int, int[], int> GCD, int firstNumber,
+            int secondNumber, params int[] nums)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            int result = GCD(firstNumber, secondNumber, nums);
+            watch.Stop();
+            return watch;
+        }
+
+        /// <summary>
+        /// Method for testing execution time of finding Nth root of double value
+        /// </summary>
+        /// <param name="NthRoot">Choosen method</param>
+        /// <param name="number">User's number</param>
+        /// <param name="degree">User;s degree</param>
+        /// <param name="precision">Setted precision</param>
+        /// <returns>Structure with information about the execution time</returns>
+        public static Stopwatch GetNthRootExecutionTime(Func<double, int, double, double> NthRoot,
+            double number, int degree, double precision)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            double result = NthRoot(number, degree, precision);
+            watch.Stop();
+            return watch;
+        }
+        #endregion
+        #endregion
+
+        #region Private API
         /// <summary>
         /// Method which helps us find the nearest possible digit position
         /// to increase the number value
@@ -154,7 +308,92 @@ namespace MathsExtension
 
             return result;
         }
-     
+
+        /// <summary>
+        /// Checks existion of negative elements and makes them positive
+        /// </summary>
+        /// <param name="firstNum">First argument</param>
+        /// <param name="secondNum">Second argument</param>
+        private static void ConvertToAbsolute(ref int firstNum, ref int secondNum)
+        {
+            if (firstNum < 0)
+            {
+                firstNum *= -1;
+            }
+
+            if (secondNum < 0)
+            {
+                secondNum *= -1;
+            }
+        }
+
+        /// <summary>
+        /// Main part of Binary recoursive algorithm
+        /// </summary>
+        /// <param name="firstNum">First integer numebr</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <returns>GCD of 2 numbers</returns>
+        private static int BinaryGCD(int firstNum, int secondNum)
+        {
+            int caseOut = ChecksOnBinaryGCD(firstNum, secondNum);
+
+            if (caseOut != -1)
+            {
+                return caseOut;
+            }
+
+            if ((~firstNum & 1) != 0)
+            {
+                if ((secondNum & 1) != 0)
+                {
+                    return FindGCDBinary(firstNum >> 1, secondNum);
+                }
+                else
+                {
+                    return FindGCDBinary(firstNum >> 1, secondNum >> 1) << 1;
+                }
+            }
+
+            if ((~secondNum & 1) != 0)
+            {
+                return BinaryGCD(firstNum, secondNum >> 1);
+            }
+
+            if (firstNum > secondNum)
+            {
+                return BinaryGCD((firstNum - secondNum) >> 1, secondNum);
+            }
+
+            return BinaryGCD((secondNum - firstNum) >> 1, firstNum);
+        }
+
+        /// <summary>
+        /// Private method for BinaryGCD that contains checks on
+        /// situations to get out of recoursion
+        /// </summary>
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <returns>One of the params or -1 in case of to continue recoursion</returns>
+        private static int ChecksOnBinaryGCD(int firstNum, int secondNum)
+        {
+            if (firstNum == secondNum)
+            {
+                return firstNum;
+            }
+
+            if (firstNum == 0)
+            {
+                return secondNum;
+            }
+
+            if (secondNum == 0)
+            {
+                return firstNum;
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// Simple method for swapping chose value type by references
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MathsExtension;
 
 namespace MathsExtension.Test
 {
@@ -89,5 +90,61 @@ namespace MathsExtension.Test
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void FindNextBiggerNum_Minus5_ArgumentExceptionExpected()
             => Operations.FindNextBiggerNumber(-5);
+
+        [TestMethod]
+        public void FindGCDEuclid_24_30_6Expected()
+            => Assert.AreEqual(6, Operations.FindGCDEuclid(24, 30));
+
+        [TestMethod]
+        public void FindGCDEuclid_30_24_6Expected()
+            => Assert.AreEqual(6, Operations.FindGCDEuclid(30, 24));
+
+        [TestMethod]
+        public void FindGCDEuclid_0_60_60Expected()
+            => Assert.AreEqual(60, Operations.FindGCDEuclid(0, 60));
+
+        [TestMethod]
+        public void FindGCDEuclid_0_0_0Expected()
+            => Assert.AreEqual(0, Operations.FindGCDEuclid(0, 0));
+
+        [TestMethod]
+        public void FindGCDEuclid_Minus3_24_3Expected()
+            => Assert.AreEqual(3, Operations.FindGCDEuclid(-3, 24));
+
+        [TestMethod]
+        public void FindGCDEuclid_1_15_1Expected()
+            => Assert.AreEqual(1, Operations.FindGCDEuclid(1, 15));
+
+        [TestMethod]
+        public void FindGCDEuclid_554600_15246220_20Expected()
+            => Assert.AreEqual(20, Operations.FindGCDEuclid(554600, 15246220));
+
+        [TestMethod]
+        public void FindGCDEuclid_17_19_1Expected()
+            => Assert.AreEqual(1, Operations.FindGCDEuclid(17, 19));
+
+        [TestMethod]
+        public void FindGCDEuclid_24_64_32Expected()
+            => Assert.AreEqual(8, Operations.FindGCDEuclid(24, 64));
+
+        [TestMethod]
+        public void FindGCDBinary_55_Minus5_5Expected()
+           => Assert.AreEqual(5, Operations.FindGCDBinary(-5, 55));
+
+        [TestMethod]
+        public void FindGCDBinary_10_99_1Expected()
+           => Assert.AreEqual(1, Operations.FindGCDBinary(10, 99));
+
+        [TestMethod]
+        public void FindGCDBinary_18_99_9_9Expected()
+           => Assert.AreEqual(9, Operations.FindGCDBinary(18, 99, 9));
+
+        [TestMethod]
+        public void FindGCDBinary_M56_24_M800_8Expected()
+           => Assert.AreEqual(8, Operations.FindGCDBinary(-56, 24, -800));
+
+        [TestMethod]
+        public void FindGCDBinary_56_0_0_56Expected()
+           => Assert.AreEqual(56, Operations.FindGCDBinary(56, 0, 0));
     }
 }
