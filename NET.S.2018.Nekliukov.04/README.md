@@ -1,0 +1,2 @@
+# Задачи
+[Расширить функциональную возможность типа System.Double, реализовав возможность получения строкового представления вещественного числа в формате IEEE 754.](https://github.com/Nekliukov/NET.S.2018.Nekliukov/commit/dffbd7da264f1f5f7a8763595fd7d3bf586ea654)Готовые классы-конверторы не использовать. [Разработать модульные тесты.](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.04/DoubleExtLib.Tests/DoubleExtensionTests.cs)
