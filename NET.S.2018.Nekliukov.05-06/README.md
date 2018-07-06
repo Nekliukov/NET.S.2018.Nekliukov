@@ -1,0 +1,3 @@
+# Задачи
+
+1. Реализовать [метод расширения](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.05-06/StringExtLib/StringExtension.cs) получения из строкового представления целого положительного четырехбайтового числа, записанного в p-ичной системе счисления (2<=p<=16), его десятичного значения (при реализации готовые классы-конверторы не использовать!). [Разработать модульные тесты. (NUnit фреймворк)](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.05-06/StringExtLib.Test/StringExtensionTests.cs).
