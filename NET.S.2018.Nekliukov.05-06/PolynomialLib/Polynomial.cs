@@ -2,14 +2,21 @@
 
 namespace PolynomialLib
 {
-    public class Polynomial
+    /// <summary>
+    /// Class that represents a polynomial abstraction and
+    /// provides some methods to work with it
+    /// </summary>
+    /// <seealso cref="System.ICloneable" />
+    /// <seealso cref="PolynomialLib.IEquatable" />
+    public sealed class Polynomial: ICloneable, IEquatable<Polynomial>
     {
         #region Constants
-        private const double EPSILON = double.Epsilon;
+        private const double EPSILON = 1e-10;
         #endregion
 
         #region Private fields
         private double[] coefficents;
+        private int degree;
         #endregion
 
         #region Public API        
@@ -17,57 +24,52 @@ namespace PolynomialLib
         /// Initializes a new instance of the <see cref="Polynomial"/> class.
         /// </summary>
         /// <param name="coefficents">The coefficents.</param>
-        public Polynomial(double[] coefficents) => this.Coefficents = coefficents;
-
-        #region Properties        
-        /// <summary>
-        /// Gets the coefficents.
-        /// </summary>
-        /// <value>
-        /// The coefficents.
-        /// </value>
-        /// <exception cref="System.ArgumentException">There are no coeffiecents to create a polynomial</exception>
-        /// <exception cref="System.ArgumentNullException">Array of coefficents can't be equal to null</exception>
-        public double[] Coefficents
+        public Polynomial(params double[] coefficents)
         {
-            get
+            if (coefficents == Array.Empty<double>())
             {
-                return coefficents;
+                throw new ArgumentException("There are no coeffiecents to create a polynomial");
             }
 
-            private set
-            {
-                if (value == Array.Empty<double>())
-                {
-                    throw new ArgumentException("There are no coeffiecents to create a polynomial");
-                }
-
-                coefficents = value ?? throw new
-                    ArgumentNullException("Array of coefficents can't be equal to null");
-            }
+            this.coefficents = coefficents ?? throw new
+                ArgumentNullException("Array of coefficents can't be equal to null");
         }
 
+
+        #region Properties        
         public int CoefCount { get => coefficents.Length; private set { } }
         #endregion
 
+            /// <summary>
+            /// Returns value copy of Polynomial's coefficents.
+            /// </summary>
+            /// <returns>Value copy of Polynomial's coefficents</returns>
+        public double[] GetCoefs()
+        {
+            double[] resultCoefs = new double[CoefCount];
+            Array.Copy(coefficents, resultCoefs, CoefCount);
+            return resultCoefs;
+        }
+
         #region Overloaded operations        
+
         /// <summary>
         /// Implements the operator +.
         /// </summary>
-        /// <param name="firstPoly">The first polynomial.</param>
-        /// <param name="secondPoly">The second polynomial.</param>
+        /// <param name="lhs">The first polynomial.</param>
+        /// <param name="rhs">The second polynomial.</param>
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static Polynomial operator + (Polynomial firstPoly, Polynomial secondPoly)
+        public static Polynomial operator + (Polynomial lhs, Polynomial rhs)
         {
-            Polynomial resultPoly = FindBiggerPolynomial(firstPoly, secondPoly);
+            Polynomial resultPoly = FindBiggerPolynomial(lhs, rhs);
 
             for (int i = 0; i < resultPoly.CoefCount; i++)
             {
                 try
                 {
-                    resultPoly.coefficents[i] = firstPoly.coefficents[i] + secondPoly.coefficents[i];
+                    resultPoly.coefficents[i] = lhs.coefficents[i] + rhs.coefficents[i];
                 }
                 catch (IndexOutOfRangeException)
                 {
@@ -81,48 +83,48 @@ namespace PolynomialLib
         /// <summary>
         /// Implements the operator -.
         /// </summary>
-        /// <param name="firstPoly">The first polynomial.</param>
-        /// <param name="secondPoly">The second polynomial.</param>
+        /// <param name="poly">The polynomial.</param>
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static Polynomial operator - (Polynomial firstPoly, Polynomial secondPoly)
+        public static Polynomial operator - (Polynomial poly)
         {
-            Polynomial resultPoly = FindBiggerPolynomial(firstPoly, secondPoly);
-
-            for (int i = 0; i < resultPoly.coefficents.Length; i++)
+            Polynomial resultPoly = poly.Clone();
+            for (int i = 0; i < resultPoly.CoefCount; i++)
             {
-                try
-                {
-                    resultPoly.coefficents[i] = firstPoly.coefficents[i] - secondPoly.coefficents[i];
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    break;
-                }
+                resultPoly.coefficents[i] *= -1;
             }
-
             return resultPoly;
         }
 
         /// <summary>
-        /// Implements the operator ==.
+        /// Implements the operator -.
         /// </summary>
-        /// <param name="firstPoly">The first polynomial.</param>
-        /// <param name="secondPoly">The second polynomial.</param>
+        /// <param name="lhs">The first polynomial.</param>
+        /// <param name="rhs">The second polynomial.</param>
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static bool operator == (Polynomial firstPoly, Polynomial secondPoly)
+        public static Polynomial operator -(Polynomial lhs, Polynomial rhs) => -(lhs + rhs);
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="lhs">The first polynomial.</param>
+        /// <param name="rhs">The second polynomial.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator == (Polynomial lhs, Polynomial rhs)
         {
-            if (firstPoly.CoefCount != firstPoly.CoefCount)
+            if (lhs.CoefCount != lhs.CoefCount)
             {
                 return false;
             }
 
-            for (int i = 0; i < firstPoly.CoefCount; i++)
+            for (int i = 0; i < lhs.CoefCount; i++)
             {
-                if (Math.Abs(firstPoly.coefficents[i] - secondPoly.coefficents[i]) > EPSILON)
+                if (Math.Abs(lhs.coefficents[i] - rhs.coefficents[i]) > EPSILON)
                 {
                     return false;
                 }
@@ -134,16 +136,18 @@ namespace PolynomialLib
         /// <summary>
         /// Implements the operator !=.
         /// </summary>
-        /// <param name="firstPoly">The first polynomial.</param>
-        /// <param name="secondPoly">The second polynomial.</param>
+        /// <param name="lhs">The first polynomial.</param>
+        /// <param name="rhs">The second polynomial.</param>
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static bool operator !=(Polynomial firstPoly, Polynomial secondPoly)
-            => !(firstPoly == secondPoly);
+        public static bool operator !=(Polynomial lhs, Polynomial rhs)
+            => !(lhs == rhs);
+
         #endregion
 
-        #region Overriden methods         
+        #region Overriden methods
+        
         /// <summary>
         /// Returns <see cref="System.String" /> that represents this instance.
         /// </summary>
@@ -171,7 +175,7 @@ namespace PolynomialLib
             }
 
             resultPoly = (coefficents[CoefCount - 1] < 0) ? resultPoly.Insert(0, "-") : resultPoly;
-            return string.Concat(resultPoly, Convert.ToString(Math.Abs(Coefficents[0])));
+            return string.Concat(resultPoly, Convert.ToString(Math.Abs(coefficents[0])));
         }
 
         /// <summary>
@@ -184,20 +188,14 @@ namespace PolynomialLib
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is Polynomial))
+            if (this.GetType() != obj.GetType() || obj == null)
             {
                 return false;
             }
 
-            Polynomial polyToCompare = obj as Polynomial;
-            if (polyToCompare.GetHashCode() == this.GetHashCode())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            Polynomial p = (Polynomial)obj;
+
+            return this == p;
         }
 
         /// <summary>
@@ -222,7 +220,72 @@ namespace PolynomialLib
                 return hash;
             }
         }
+        #endregion       
+
+        #region Indexer        
+        /// <summary>
+        /// Gets the <see cref="System.Double"/> at the specified index.
+        /// </summary>
+        /// <value>
+        /// The <see cref="System.Double"/>.
+        /// </value>
+        /// <param name="index">The index.</param>
+        /// <returns>Coefficent at the specified index</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Index out of range
+        /// </exception>
+        public double this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= this.coefficents.Length)
+                {
+                    throw new ArgumentOutOfRangeException("Index out of range");
+                }
+
+                return coefficents[index];
+            }
+
+            private set
+            {
+                if (index < 0 || index >= this.coefficents.Length)
+                {
+                    throw new ArgumentOutOfRangeException("Index out of range");
+                }
+
+                coefficents[index] = value;
+            }
+        }
+
         #endregion
+        #endregion
+
+        #region IClone implementation  
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>New instance</returns>
+        public Polynomial Clone() => new Polynomial(this.coefficents);
+
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
+        object ICloneable.Clone() => this.Clone();
+        #endregion
+
+        #region IEquatable implementation
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+        /// </returns>
+        public bool Equals(Polynomial other) => this == other;
 
         #endregion
 

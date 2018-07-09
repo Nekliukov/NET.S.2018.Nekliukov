@@ -39,12 +39,12 @@ namespace PolynomialLibTest
             Polynomial p1 = new Polynomial(firstCoefs);
             Polynomial p2 = new Polynomial(secondCoefs);
             Polynomial p3 = p1 + p2;
-            return p3.Coefficents;
+            return p3.GetCoefs();
         }
 
         [TestCase(new double[] { 1.25, 2, 3.55 }, new double[] { 1.25, 2, 3.55 }, ExpectedResult = true)]
         [TestCase(new double[] { int.MaxValue, 0 }, new double[] { int.MaxValue, 0 }, ExpectedResult = true)]
-        [TestCase(new double[] { 12, 0.000000000004 }, new double[] { 12, 0.0 }, ExpectedResult = false)]
+        [TestCase(new double[] { 12, 0.000000000004 }, new double[] { 12, 0.0 }, ExpectedResult = true)]
         [TestCase(new double[] { 2, 3, 4 }, new double[] { 0 }, ExpectedResult = false)]
         [TestCase(new double[] { 0, -0, 2 }, new double[] { 0, +0, 2 }, ExpectedResult = true)]
         public static bool EqualOperationTest(double[] firstCoefs, double[] secondCoefs)
@@ -56,7 +56,7 @@ namespace PolynomialLibTest
 
         [TestCase(new double[] { 1.25, 2, 3.55 }, new double[] { 1.25, 2, 3.56 }, ExpectedResult = true)]
         [TestCase(new double[] { int.MaxValue, 0 }, new double[] { int.MaxValue, 0 }, ExpectedResult = false)]
-        [TestCase(new double[] { 12, 0.000000000004 }, new double[] { 12, 0.0 }, ExpectedResult = true)]
+        [TestCase(new double[] { 12, 0.000000000004 }, new double[] { 12, 0.0 }, ExpectedResult = false)]
         [TestCase(new double[] { 2, 3, 4 }, new double[] { 0 }, ExpectedResult = true)]
         [TestCase(new double[] { 2, 3, 4 }, new double[] { 2, 3, 4.5 }, ExpectedResult = true)]
         [TestCase(new double[] { 0, -0, 2 }, new double[] { 0, +0, 2 }, ExpectedResult = false)]
