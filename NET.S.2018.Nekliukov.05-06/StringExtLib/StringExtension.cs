@@ -3,18 +3,12 @@ using System.Collections.Generic;
 
 namespace StringExtLib
 {
+    /// <summary>
+    /// Class that extends System.String, giving an ability to
+    /// convert number from 2..16 base to 10 base
+    /// </summary>
     public static class StringExtension
     {
-        #region Readonly fields
-        private static readonly Dictionary<char, int> Digits
-            = new Dictionary<char, int>
-        { 
-                { '0', 0 }, { '1', 1 }, { '2', 2 }, { '3', 3 }, { '4', 4 },
-                { '5', 5 }, { '6', 6 }, { '7', 7 }, { '8', 8 }, { '9', 9 },
-                { 'A', 10 }, { 'B', 11 }, { 'C', 12 }, { 'D', 13 }, { 'E', 14 }, { 'F', 15 },
-        };
-        #endregion
-
         #region Public API
 
         /// <summary>
@@ -54,13 +48,16 @@ namespace StringExtLib
                 return Convert.ToInt32(number);
             }
 
-            CheckDigits(number, numberBase);
+            string digits = GenerateAlphabet(numberBase);
+            CheckDigits(number, numberBase, digits);
 
             int base10Result = 0;
-            for (int i = number.Length - 1; i >= 0; i--)
+            base10Result += digits.IndexOf(number[number.Length - 1]) * 1;
+            double multiplier = numberBase;
+            for (int i = number.Length - 2; i >= 0; i--)
             {
-                    base10Result += checked(Digits[number[i]] *
-                        (int)Math.Pow(numberBase, number.Length - i - 1));
+                base10Result += checked((int)(digits.IndexOf(number[i]) * multiplier));
+                multiplier *= numberBase;
             }
 
             return base10Result;
@@ -68,22 +65,41 @@ namespace StringExtLib
         #endregion
 
         #region Private API
-        private static bool CheckDigits(string number, byte numberBase)
+        private static bool CheckDigits(string number, byte numberBase, string alphabet)
         {
+            
             for (int i = 0; i < number.Length; i++)
             {
-                if (!Digits.ContainsKey(number[i]))
+                if (alphabet.IndexOf(number[i]) == -1)
                 {
                     throw new ArgumentException($"There are no digits equal to the value {number[i]}");
                 }
 
-                if (Digits[number[i]] >= numberBase)
+                if (alphabet.IndexOf(number[i]) >= numberBase)
                 {
                     throw new ArgumentException($"Digit {number[i]} can't be higher than or equal to base");
                 }
             }
 
             return true;
+        }
+
+        private static string GenerateAlphabet(byte numberBase)
+        {
+            string resultAlphabet = string.Empty;
+            const int SHIFT_TO_ALPH = 55;
+            for(int i = 0; i < numberBase; i++)
+            {
+                if (i >= 10)
+                {
+                    resultAlphabet += char.ConvertFromUtf32(SHIFT_TO_ALPH + i);
+                }
+                else
+                {
+                    resultAlphabet += i.ToString();
+                }
+            }
+            return resultAlphabet;
         }
         #endregion
     }
