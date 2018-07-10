@@ -108,6 +108,50 @@ namespace PolynomialLib
         public static Polynomial operator -(Polynomial lhs, Polynomial rhs) => -(lhs + rhs);
 
         /// <summary>
+        /// Implements the operator * with 2 polynomials and.
+        /// </summary>
+        /// <param name="lhs">The LHS.</param>
+        /// <param name="rhs">The RHS.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static Polynomial operator *(Polynomial lhs, Polynomial rhs)
+        {
+            double[] resultPoly = new double[lhs.CoefCount + rhs.CoefCount - 1];
+            for (int i = 0; i < lhs.CoefCount; i++)
+            {
+                for (int j = 0; j < rhs.CoefCount; j++)
+                {
+                    resultPoly[i + j] += lhs[i] * rhs[j];
+                }
+            }
+
+            return new Polynomial(resultPoly);
+        }
+
+        /// <summary>
+        /// Implements the operator * with polynomial and number.
+        /// </summary>
+        /// <param name="lhs">The LHS.</param>
+        /// <param name="num">The number.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static Polynomial operator *(Polynomial lhs, double num)
+            => lhs * new Polynomial(new double[] { num });
+
+        /// <summary>
+        /// Implements the operator * with polynomial and number.
+        /// </summary>
+        /// <param name="lhs">The LHS.</param>
+        /// <param name="num">The number.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static Polynomial operator *(double num, Polynomial rhs)
+            => rhs * new Polynomial(new double[] { num });
+
+        /// <summary>
         /// Implements the operator ==.
         /// </summary>
         /// <param name="lhs">The first polynomial.</param>

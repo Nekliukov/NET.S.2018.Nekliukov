@@ -66,5 +66,28 @@ namespace PolynomialLibTest
             Polynomial p2 = new Polynomial(secondCoefs);
             return p1 != p2;
         }
+
+        [TestCase(new double[] { 1, 2, 3 }, new double[] {2, 3, 4 }, ExpectedResult = new double[] { 2, 7, 16, 17, 12})]
+        [TestCase(new double[] { 1d, 2d }, new double[] { 1d, 2d, 3d }, ExpectedResult = new double[] { 1d, 4d, 7d, 6d })]
+        [TestCase(
+            new double[] { 15.5, -27.1, 0.0, 0.0, 345.223 },
+            new double[] { 35, 0.0, 1, 56 },
+            ExpectedResult = new double[] { 542.5, -948.5, 15.5, 840.9, 10565.205, 0.0, 345.223, 19332.488 })]
+        public static double[] MulTestPvsP(double[] firstCoefs, double[] secondCoefs)
+        {
+            Polynomial p1 = new Polynomial(firstCoefs);
+            Polynomial p2 = new Polynomial(secondCoefs);
+            Polynomial p3 = p1 * p2;
+            return p3.GetCoefs();
+        }
+
+        [TestCase(new double[] { 1, 2, 3 }, 6.0, ExpectedResult = new double[] { 6, 12, 18})]
+        [TestCase(new double[] { 0.0, 2.5, 100 }, 0.5, ExpectedResult = new double[] { 0, 1.25, 50 })]
+        public static double[] MulTestPvsN(double[] firstCoefs, double number)
+        {
+            Polynomial p1 = new Polynomial(firstCoefs);
+            Polynomial p2 = p1 * number;
+            return p2.GetCoefs();
+        }
     }
 }
