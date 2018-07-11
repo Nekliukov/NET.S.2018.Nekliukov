@@ -105,7 +105,7 @@ namespace PolynomialLib
         /// <returns>
         /// The result of the operator.
         /// </returns>
-        public static Polynomial operator -(Polynomial lhs, Polynomial rhs) => -(lhs + rhs);
+        public static Polynomial operator -(Polynomial lhs, Polynomial rhs) => lhs + (-rhs);
 
         /// <summary>
         /// Implements the operator * with 2 polynomials and.
@@ -302,6 +302,7 @@ namespace PolynomialLib
         }
 
         #endregion
+
         #endregion
 
         #region IClone implementation  
