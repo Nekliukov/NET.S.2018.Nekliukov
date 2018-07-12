@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using CustomerLib;
+using CustomerLibExtension;
 
 namespace CustomerLibTest
 {
@@ -9,9 +10,7 @@ namespace CustomerLibTest
     {
         [TestCase("G", ExpectedResult = "Roman Nekliukov, 1000000, +375(44)532-60-52")]
         [TestCase("N", ExpectedResult = "Roman Nekliukov")]
-        [TestCase("C", ExpectedResult = "+375(44)532-60-52")]
-        [TestCase("NC", ExpectedResult = "Roman Nekliukov, +375(44)532-60-52")]
-        [TestCase("NR", ExpectedResult = "Roman Nekliukov, 1000000")]
+        [TestCase("c", ExpectedResult = "+375(44)532-60-52")]
         [TestCase("", ExpectedResult = "Roman Nekliukov, 1000000, +375(44)532-60-52")]
         [TestCase(null, ExpectedResult = "Roman Nekliukov, 1000000, +375(44)532-60-52")]
         public string TestToStringCustomer(string format)
@@ -19,6 +18,16 @@ namespace CustomerLibTest
             Customer cust = new Customer("Roman Nekliukov", 1000000, "+375(44)532-60-52");
             return cust.ToString(format, null);
         }
+
+        [TestCase("NC", ExpectedResult = "Roman Nekliukov, +375(44)532-60-52")]
+        [TestCase("NR", ExpectedResult = "Roman Nekliukov, 1000000")]
+        public string TestToStringCustomerFromatter(string format)
+        {
+            AnotherFormatProvider fp = new AnotherFormatProvider();
+            Customer cust = new Customer("Roman Nekliukov", 1000000, "+375(44)532-60-52");
+            return fp.Format(format, cust, null);
+        }
+
 
         [TestCase("", 1000000, "+375445326052")]
         [TestCase("Roman Nekliukov", 1000000, "@375(44)532 - 60 - 52")]

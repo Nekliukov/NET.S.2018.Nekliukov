@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace CustomerLib
 {
@@ -31,7 +32,15 @@ namespace CustomerLib
             private set
             {
                 CheckInputString(value);
-                name = value;
+                if (IsName(value))
+                {
+                    name = value;
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
+                    
             }
         }
 
@@ -110,11 +119,12 @@ namespace CustomerLib
             if (String.IsNullOrEmpty(format)) format = "G";
             if (formatProvider == null) formatProvider = CultureInfo.CurrentCulture;
 
+            format = format.ToUpper();
             switch (format)
             {
                 case "G":
                     {
-                        return $"{name}, {Revenue}, {contactPhone}";
+                        return $"{name}, {revenue}, {contactPhone}";
                     }
                 case "N":
                     {
@@ -123,15 +133,7 @@ namespace CustomerLib
                 case "C":
                     {
                         return contactPhone.ToString();
-                    }
-                case "NR":
-                    {
-                        return $"{name}, {Revenue}";
-                    }
-                case "NC":
-                    {
-                        return $"{name}, {contactPhone}";
-                    }
+                    }              
                 default:
                     {
                         throw new FormatException(string.Format("Invalid format string: '{0}'.", format));
@@ -202,6 +204,23 @@ namespace CustomerLib
 
             return true;
         }
+
+        private bool IsName(string name)
+        {
+            string allowableSymbols = "- ";
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (!Char.IsLetter(name[i]) &&
+                    (!allowableSymbols.Contains(name[i].ToString())))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         #endregion
     }
+
+    
 }

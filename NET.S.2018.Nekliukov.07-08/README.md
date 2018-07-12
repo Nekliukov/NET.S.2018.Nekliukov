@@ -6,3 +6,5 @@
  - Customer record: Jeffrey Richter
  - Customer record: 1000000 и т.д.
 [Разработать модульные тесты.](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.07-08/CustomerLibTest/CustomerTests.cs)
+
+2.Не изменяя класс Customer, добавить для объектов данного класса дополнительную [возможность форматирования](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.07-08/CustomerLibExtension/CustomerExtension.cs), не предусмотренную классом. [Разработать модульные тесты.](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.07-08/CustomerLibTest/CustomerTests.cs)
