@@ -6,7 +6,7 @@ namespace BankAccountLib
     /// <summary>
     /// Class for creating bank accounts. Should be abstract in the future !
     /// </summary>
-    public class BankAccount
+    public abstract class BankAccount
     {
         #region Protected fields
 
@@ -14,6 +14,21 @@ namespace BankAccountLib
         protected string idNumber;
         protected decimal balance;
         protected int bonusPoints;
+
+        /// <summary>
+        /// The bonus multiplier
+        /// </summary>
+        protected int BONUS_MULTIPLIER;
+
+        /// <summary>
+        /// The bottom limit of balance
+        /// </summary>
+        protected decimal MIN_LIMIT;
+
+        /// <summary>
+        /// The maximum value of money on account
+        /// </summary>
+        protected decimal MAX_LIMIT;
 
         #endregion
 
@@ -43,7 +58,7 @@ namespace BankAccountLib
         public AccountHolder Holder
         {
             get => holder;
-            private set => holder = value ??
+            protected set => holder = value ??
                 throw new ArgumentNullException($"Null {nameof(value)} value was sent");
         }
 
@@ -57,7 +72,7 @@ namespace BankAccountLib
         public string IdNumber
         {
             get => idNumber;
-            private set => idNumber = value ??
+            protected set => idNumber = value ??
                 throw new ArgumentNullException($"Null {nameof(value)} value was sent");
         }
 
@@ -78,6 +93,18 @@ namespace BankAccountLib
         public int BonusPoints { get => bonusPoints; }
 
         #endregion
-        
+
+        #region Protected methods
+
+
+
+        #endregion
+
+        #region Template methods
+
+        protected abstract void PerformDeposit(decimal deposit);
+        protected abstract void PerformWithdraw(decimal withdraw);
+
+        #endregion
     }
 }
