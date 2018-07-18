@@ -6,7 +6,7 @@ namespace BankAccountLib
     /// Gold account with inherited functionality from Base Account
     /// </summary>
     /// <seealso cref="BankAccountLib.BaseAccount" />
-    class GoldAccount : BaseAccount
+    public class GoldAccount : BaseAccount
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GoldAccount"/> class.
