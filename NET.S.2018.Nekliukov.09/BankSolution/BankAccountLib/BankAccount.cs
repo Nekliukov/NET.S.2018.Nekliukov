@@ -18,17 +18,17 @@ namespace BankAccountLib
         /// <summary>
         /// The bonus multiplier
         /// </summary>
-        protected int BONUS_MULTIPLIER;
+        protected int bonusMultiplier;
 
         /// <summary>
         /// The bottom limit of balance
         /// </summary>
-        protected decimal MIN_LIMIT;
+        protected decimal minLimit;
 
         /// <summary>
         /// The maximum value of money on account
         /// </summary>
-        protected decimal MAX_LIMIT;
+        protected decimal maxLimit;
 
         #endregion
 
