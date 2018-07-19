@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using JaggedArrayLib;
+using System.Linq;
 using System;
 
 namespace JaggedArrayLibTest
@@ -10,7 +11,7 @@ namespace JaggedArrayLibTest
     /// should be a normal thing, that happens because of machine peculiar properties (fixed size of int)
     /// </summary>
     [TestFixture]
-    public class SortJagTest
+    public class FromInterfaceToDelegateTest
     {
         #region Input data
         private readonly int[][] testArray =
@@ -32,7 +33,7 @@ namespace JaggedArrayLibTest
 
         #region Test Cases
         [Test]
-        public void SortByMaxUp()
+        public void FromInterfaceToDelegate_SortByMaxUp()
         {
             int[][] ExpectedResult = new int[][]{
                 new int[] { 2, 4, 1, 3, -1000, 4, 2, 1 }, // Max = 4
@@ -40,15 +41,16 @@ namespace JaggedArrayLibTest
                 new int[] { 9, 11, 5 },                   // Max = 11
             };
 
-            SortJag.BubbleSort(testArray, new Comparers.CompareByMaxUp());
+            Comparers.CompareByMaxUp maxUpComp = new Comparers.CompareByMaxUp();
+            FromInterfaceToDelegate.BubbleSort(testArray, maxUpComp.Compare);
             CollectionAssert.AreEqual(testArray, ExpectedResult);
-            // Default sorting equals to sorting by max values of rows, also checks it here
-            SortJag.BubbleSort(testArray);
+
+            FromInterfaceToDelegate.BubbleSort(testArray, new Comparers.CompareByMaxUp());
             CollectionAssert.AreEqual(testArray, ExpectedResult);
         }
 
         [Test]
-        public void SortByMaxDown()
+        public void FromInterfaceToDelegate_SortByMaxDown()
         {
             int[][] ExpectedResult = new int[][]{
                 new int[] { 9, 11, 5},                    // Max = 11
@@ -56,12 +58,16 @@ namespace JaggedArrayLibTest
                 new int[] { 2, 4, 1, 3, -1000, 4, 2, 1 }, // Max = 4
             };
 
-            SortJag.BubbleSort(testArray, new Comparers.CompareByMaxDown());
+            Comparers.CompareByMaxDown maxDownComp = new Comparers.CompareByMaxDown();
+            FromInterfaceToDelegate.BubbleSort(testArray, maxDownComp.Compare);
+            CollectionAssert.AreEqual(testArray, ExpectedResult);
+
+            FromInterfaceToDelegate.BubbleSort(testArray, new Comparers.CompareByMaxDown());
             CollectionAssert.AreEqual(testArray, ExpectedResult);
         }
 
         [Test]
-        public void SortByMinUp()
+        public void FromInterfaceToDelegate_SortByMinUp()
         {
             int[][] ExpectedResult = new int[][]{
                 new int[] { 2, 4, 1, 3, -1000, 4, 2, 1 }, // Min = -1000
@@ -69,12 +75,16 @@ namespace JaggedArrayLibTest
                 new int[] { 9, 11, 5},                    // Min = 5
             };
 
-            SortJag.BubbleSort(testArray, new Comparers.CompareByMinUp());
+            Comparers.CompareByMinUp minUpComp = new Comparers.CompareByMinUp();
+            FromInterfaceToDelegate.BubbleSort(testArray, minUpComp.Compare);
+            CollectionAssert.AreEqual(testArray, ExpectedResult);
+
+            FromInterfaceToDelegate.BubbleSort(testArray, new Comparers.CompareByMinUp());
             CollectionAssert.AreEqual(testArray, ExpectedResult);
         }
 
         [Test]
-        public void SortByMinDown()
+        public void FromInterfaceToDelegate_SortByMinDown()
         {
             int[][] ExpectedResult = new int[][]{
                 new int[] { 9, 11, 5},                    // Min = 5
@@ -82,12 +92,16 @@ namespace JaggedArrayLibTest
                 new int[] { 2, 4, 1, 3, -1000, 4, 2, 1 }, // Min = -1000
             };
 
-            SortJag.BubbleSort(testArray, new Comparers.CompareByMinDown());
+            Comparers.CompareByMinDown minDownComp = new Comparers.CompareByMinDown();
+            FromInterfaceToDelegate.BubbleSort(testArray, minDownComp.Compare);
+            CollectionAssert.AreEqual(testArray, ExpectedResult);
+
+            FromInterfaceToDelegate.BubbleSort(testArray, new Comparers.CompareByMinDown());
             CollectionAssert.AreEqual(testArray, ExpectedResult);
         }
 
         [Test]
-        public void SortBySumUp()
+        public void FromInterfaceToDelegate_SortBySumUp()
         {
             int[][] ExpectedResult = new int[][]{
                 new int[] { 2, 4, 1, 3, -1000, 4, 2, 1 }, // Sum = -983
@@ -95,12 +109,16 @@ namespace JaggedArrayLibTest
                 new int[] { 3, 6, 4, 9, 4 },              // Sum = 26
             };
 
-            SortJag.BubbleSort(testArray, new Comparers.CompareBySumUp());
+            Comparers.CompareBySumUp sumUpComp = new Comparers.CompareBySumUp();
+            FromInterfaceToDelegate.BubbleSort(testArray, sumUpComp.Compare);
+            CollectionAssert.AreEqual(testArray, ExpectedResult);
+
+            FromInterfaceToDelegate.BubbleSort(testArray, new Comparers.CompareBySumUp());
             CollectionAssert.AreEqual(testArray, ExpectedResult);
         }
 
         [Test]
-        public void SortBySumDown()
+        public void FromInterfaceToDelegate_SortBySumDown()
         {
             int[][] ExpectedResult = new int[][]{
                 new int[] { 3, 6, 4, 9, 4 },              // Max = 26
@@ -108,17 +126,25 @@ namespace JaggedArrayLibTest
                 new int[] { 2, 4, 1, 3, -1000, 4, 2, 1 }, // Max = -983
             };
 
-            SortJag.BubbleSort(testArray, new Comparers.CompareBySumDown());
+            Comparers.CompareBySumDown sumDownComp = new Comparers.CompareBySumDown();
+            FromInterfaceToDelegate.BubbleSort(testArray, sumDownComp.Compare);
+            CollectionAssert.AreEqual(testArray, ExpectedResult);
+
+            FromInterfaceToDelegate.BubbleSort(testArray, new Comparers.CompareBySumDown());
             CollectionAssert.AreEqual(testArray, ExpectedResult);
         }
 
         [Test]
-        public void WrongArrayNullTest()
-            => Assert.Throws<ArgumentNullException>(()=>SortJag.BubbleSort(wrongNullArray));
+        public void FromInterfaceToDelegate_WrongArrayNullTest()
+            => Assert.Throws<ArgumentNullException>(()
+                => FromInterfaceToDelegate.BubbleSort(wrongNullArray,
+                    (int[] a, int[] b)=>a.Sum() - b.Sum()));
 
         [Test]
-        public void WrongArrayEmptyTest()
-            => Assert.Throws<ArgumentException>(() => SortJag.BubbleSort(wrongEmptyArray));
-        #endregion
+        public void FromInterfaceToDelegate_WrongArrayEmptyTest()
+            => Assert.Throws<ArgumentException>(()
+                => FromInterfaceToDelegate.BubbleSort(wrongEmptyArray,
+                    (int[] a, int[] b) => a.Sum() - b.Sum()));
     }
+    #endregion
 }

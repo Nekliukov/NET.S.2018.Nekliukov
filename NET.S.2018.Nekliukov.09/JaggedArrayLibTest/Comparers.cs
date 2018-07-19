@@ -91,7 +91,9 @@ namespace JaggedArrayLibTest
 
     #region Validator
     /// <summary>
-    /// Class for primitive checks operands on null and refference equality
+    /// Class for primitive checks operands on null and refference eqality.
+    /// CASE OF NULL OPERANDS will not happend in our task with integer arrays,
+    /// but it still realised (just maybe we will use it somewhere else in this assembly)
     /// </summary>
     internal static class CompareValidator
     {

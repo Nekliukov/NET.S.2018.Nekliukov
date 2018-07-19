@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace JaggedArrayLib
 {
-    #region Public API
     /// <summary>
     /// Class for sorting jagged arrays rows in different ways
     /// </summary>
-    public static class SortJag
+    public static class FromInterfaceToDelegate
     {
+        #region Public API
         /// <summary>
-        /// Bubble sort rows sorting with choosing of sorting way
+        /// Bubble sort rows sorting with choosing of sorting way. Interface realisation
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="comparer">The comparer.</param>
@@ -31,6 +30,17 @@ namespace JaggedArrayLib
                 }
             }
         }
+
+        /// <summary>
+        /// Bubble sort rows sorting with choosing of sorting way. Delegate realisation
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="comparer">The comparer.</param>
+        /// <exception cref="ArgumentException">Empty array was sent</exception>
+        /// <exception cref="ArgumentNullException">Null array was sent</exception>
+        public static void BubbleSort(int[][] array, Comparison<int[]> comparison)
+            => BubbleSort(array, Comparer<int[]>.Create(comparison));
+
         #endregion
 
         private static void CheckIsNullOrEmpty(int[][] jagArray)
