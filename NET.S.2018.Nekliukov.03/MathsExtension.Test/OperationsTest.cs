@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MathsExtension;
 
 namespace MathsExtension.Test
 {
@@ -146,5 +145,21 @@ namespace MathsExtension.Test
         [TestMethod]
         public void FindGCDBinary_56_0_0_56Expected()
            => Assert.AreEqual(56, Operations.FindGCDBinary(56, 0, 0));
+
+        [TestMethod]
+        public void FindGCDEuclidUsingDelegates()
+            => Assert.AreEqual(1, Operations.FindGCD(Operations.FindGCDEuclid, 24, 55, 43));
+
+        [TestMethod]
+        public void FindGCD3EuclidUsingDelegates()
+            => Assert.AreEqual(8, Operations.FindGCD(Operations.FindGCDEuclid, 24, 8, 16));
+
+        [TestMethod]
+        public void FindGCDBinary2UsingDelegates()
+            => Assert.AreEqual(1, Operations.FindGCD(Operations.FindGCDBinary, 24, 55));
+
+        [TestMethod]
+        public void FindGCDBinary3UsingDelegates()
+            => Assert.AreEqual(4, Operations.FindGCD(Operations.FindGCDBinary, 24, 4, 12));
     }
 }

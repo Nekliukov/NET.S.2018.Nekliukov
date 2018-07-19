@@ -111,8 +111,8 @@ namespace MathsExtension
         /// <returns>GCD of two numbers</returns>
         public static int FindGCDEuclid(int firstNum, int secondNum)
         {
-            ConvertToAbsolute(ref firstNum);
-            ConvertToAbsolute(ref secondNum);
+            firstNum = Math.Abs(firstNum);
+            secondNum = Math.Abs(secondNum);
 
             while (firstNum != 0 && secondNum != 0)
             {
@@ -130,21 +130,6 @@ namespace MathsExtension
         }
 
         /// <summary>
-        /// Returns elapsed time of GCD Euclid algorithm with 2 numbers in milliseconds
-        /// </summary>
-        /// <param name="firstNum">First integer number</param>
-        /// <param name="secondNum">Second integer number</param>
-        /// <param name="watch">Timer structure</param>
-        /// <returns>Ellapsed milliseconds</returns>
-        public static long FindGCDEuclid(int firstNum, int secondNum, out Stopwatch watch)
-        {
-            watch = Stopwatch.StartNew();
-            int result = FindGCDEuclid(firstNum, secondNum);
-            watch.Stop();
-            return watch.ElapsedMilliseconds;
-        }
-
-        /// <summary>
         /// Overloaded method for evaluating of greatest common divisior of
         /// 3 numbers using Euclid algorithm
         /// </summary>
@@ -156,22 +141,6 @@ namespace MathsExtension
         {
             int curGCD = FindGCDEuclid(firstNum, secondNum);
             return FindGCDEuclid(curGCD, thirdNum);
-        }
-
-        /// <summary>
-        /// Returns elapsed time of GCD Euclid algorithm with 3 numbers in milliseconds
-        /// </summary>
-        /// <param name="firstNum">First integer number</param>
-        /// <param name="secondNum">Second integer number</param>
-        /// <param name="thirdNum">Third integer number</param>
-        /// <param name="watch">Timer structure</param>
-        /// <returns>Ellapsed milliseconds</returns>
-        public static long FindGCDEuclid(int firstNum, int secondNum, int thirdNum, out Stopwatch watch)
-        {
-            watch = Stopwatch.StartNew();
-            int result = FindGCDEuclid(firstNum, secondNum, thirdNum);
-            watch.Stop();
-            return watch.ElapsedMilliseconds;
         }
 
         /// <summary>
@@ -197,20 +166,6 @@ namespace MathsExtension
             return currGCD;
         }
 
-        /// <summary>
-        /// Returns elapsed time of GCD Euclid algorithm with 4+ numbers in milliseconds
-        /// </summary>
-        /// <param name="nums">Arrray of integer numbers</param>
-        /// <param name="watch">Timer structure</param>
-        /// <returns>Ellapsed milliseconds</returns>
-        /// <exception cref="ArgumentException">Thrown when number of elements lower than 2</exception>
-        public static long FindGCDEuclid(out Stopwatch watch, params int[] nums)
-        {
-            watch = Stopwatch.StartNew();
-            int result = FindGCDEuclid(nums);
-            watch.Stop();
-            return watch.ElapsedMilliseconds;
-        }
         #endregion
 
         #region Binary GCD algorithm
@@ -223,24 +178,9 @@ namespace MathsExtension
         /// <returns>GCD of more than 2 numbers</returns>
         public static int FindGCDBinary(int firstNum, int secondNum)
         {
-            ConvertToAbsolute(ref firstNum);
-            ConvertToAbsolute(ref secondNum);
+            firstNum = Math.Abs(firstNum);
+            secondNum = Math.Abs(secondNum);
             return BinaryGCD(firstNum, secondNum);        
-        }
-
-        /// <summary>
-        /// Returns elapsed time of GCD Binary algorithm with 2 numbers in milliseconds
-        /// </summary>
-        /// <param name="firstNum">First integer number</param>
-        /// <param name="secondNum">Second integer number</param>
-        /// <param name="watch">Timer structure</param>
-        /// <returns>Ellapsed milliseconds</returns>
-        public static long FindGCDBinary(int firstNum, int secondNum, out Stopwatch watch)
-        {
-            watch = Stopwatch.StartNew();
-            int result = FindGCDBinary(firstNum, secondNum);
-            watch.Stop();
-            return watch.ElapsedMilliseconds;
         }
 
         /// <summary>
@@ -252,12 +192,7 @@ namespace MathsExtension
         /// <param name="thirdNum">Third integer number</param>
         /// <returns>GCD of 3 numbers</returns>
         public static int FindGCDBinary(int firstNum, int secondNum, int thirdNum)
-        {
-            ConvertToAbsolute(ref firstNum);
-            ConvertToAbsolute(ref secondNum);
-            ConvertToAbsolute(ref thirdNum);
-            return BinaryGCD(BinaryGCD(firstNum, secondNum), thirdNum);
-        }
+            => BinaryGCD(BinaryGCD(firstNum, secondNum), thirdNum);
 
         /// <summary>
         /// Overloaded method for evaluating of greatest common divisior of
@@ -281,25 +216,98 @@ namespace MathsExtension
 
             return currGCD;
         }
+        #endregion
+
+        #region Delegates realistaion
+        /// <summary>
+        /// Finds the GCD using delegates
+        /// </summary>
+        /// <param name="GcdAlgorithm">The GCD algorithm.</param>
+        /// <param name="firstNum">The first number.</param>
+        /// <param name="secondNum">The second number.</param>
+        /// <returns>GCD</returns>
+        public static int FindGCD(Func<int, int, int> GcdAlgorithm, int firstNum, int secondNum)
+            => GcdAlgorithm(firstNum, secondNum);
 
         /// <summary>
-        /// Returns elapsed time of GCD Binary algorithm with 4+ numbers in milliseconds
+        /// Returns GCD of 2 numbers and time in milliseconds
         /// </summary>
-        /// <param name="nums">Array of integer numbers</param>
-        /// <param name="watch">Timer structure</param>
-        /// <returns>Ellapsed milliseconds</returns>
-        public static long FindGCDBinary(out Stopwatch watch, params int[] nums)
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <param name="time">REsult time</param>
+        /// <returns>GCD</returns>
+        public static int FindGCD(Func<int, int, int> GcdAlgorithm,
+            int firstNum, int secondNum, out long time)
         {
-            watch = Stopwatch.StartNew();
-            int result = FindGCDBinary(nums);
-            watch.Stop();
-            return watch.ElapsedMilliseconds;
+            Stopwatch sw = Stopwatch.StartNew();
+            int result = GcdAlgorithm(firstNum, secondNum);
+            sw.Stop();
+            time = sw.ElapsedMilliseconds;
+            return result;
         }
+
+        /// <summary>
+        /// Finds the GCD using delegate.
+        /// </summary>
+        /// <param name="GcdAlgorithm">The GCD algorithm.</param>
+        /// <param name="firstNum">The first number.</param>
+        /// <param name="secondNum">The second number.</param>
+        /// <param name="thirdNum">The third number.</param>
+        /// <returns>GCD</returns>
+        public static int FindGCD(Func<int, int, int, int> GcdAlgorithm,
+            int firstNum, int secondNum, int thirdNum)
+            => GcdAlgorithm(firstNum, secondNum, thirdNum);
+
+        /// <summary>
+        /// Returns GCD of 3 numbers adn time in milliseconds
+        /// </summary>
+        /// <param name="firstNum">First integer number</param>
+        /// <param name="secondNum">Second integer number</param>
+        /// <param name="thirdNum">Third integer number</param>
+        /// <param name="time">Elapsed time</param>
+        /// <returns>GCD</returns>
+        public static long FindGCDEuclid(Func<int, int, int, int> GcdAlgorithm,
+            int firstNum, int secondNum, int thirdNum, out long time)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            int result = GcdAlgorithm(firstNum, secondNum, thirdNum);
+            sw.Stop();
+            time = sw.ElapsedMilliseconds;
+            return result;
+        }
+
+        #region Methods that causes ambiguation. Must be fixed
+        ///// <summary>
+        ///// Finds the GCD using delegate
+        ///// </summary>
+        ///// <param name="GcdAlgorithm">The GCD algorithm.</param>
+        ///// <param name="numbers">The numbers.</param>
+        ///// <returns>GCD</returns>
+        //public static int FindGCD(Func<int[], int> GcdAlgorithm, params int[] nums)
+        //    => GcdAlgorithm(nums);
+
+        ///// <summary>
+        ///// Returns GCD of 4+ numbers and elapsed time in milliseconds
+        ///// </summary>
+        ///// <param name="nums">Arrray of integer numbers</param>
+        ///// <param name="time">Elapsed time</param>
+        ///// <returns>GCD</returns>
+        //public static long FindGCDEuclid(Func<int[], int> GcdAlgorithm,
+        //     out long time, params int[] nums)
+        //{
+        //    Stopwatch sw = Stopwatch.StartNew();
+        //    int result = FindGCDEuclid(nums);
+        //    sw.Stop();
+        //    time = sw.ElapsedMilliseconds;
+        //    return result;
+        //}
         #endregion
 
         #endregion
 
-        #region Private API
+        #endregion
+
+        #region Private methods
 
         /// <summary>
         /// Method which helps us find the nearest possible digit position
@@ -356,18 +364,6 @@ namespace MathsExtension
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Checks existion of negative elements and makes them positive
-        /// </summary>
-        /// <param name="firstNum">Users number</param>
-        private static void ConvertToAbsolute(ref int num)
-        {
-            if (num < 0)
-            {
-                num *= -1;
-            }
         }
 
         /// <summary>
