@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace FibonacciLib
 {
@@ -18,33 +19,24 @@ namespace FibonacciLib
         /// or
         /// Number value is too long."
         /// </exception>
-        public static long[] GenerateNumbers(int numOfNumbers)
+        public static IEnumerable<BigInteger> GenerateNumbers(int numOfNumbers)
         {
             if (numOfNumbers <= 0)
             {
                 throw new ArgumentException("Number of elements must be more than 0");
             }
-
-            List<long> numbers = new List<long>(numOfNumbers);
-            int firstNum = 0, secondNum = 1, nextNum;
+            List<BigInteger> numbers = new List<BigInteger>(numOfNumbers);
+            BigInteger firstNum = 0, secondNum = 1, nextNum;
             numbers.Add(firstNum); numbers.Add(secondNum);
             while (numbers.Count < numOfNumbers)
             {
-                try
-                {
-                    nextNum = checked(firstNum + secondNum);
-                }
-                catch (OverflowException)
-                {
-                    throw new ArgumentException("Number value is too long. Max limit is " +
-                        $"{numbers.Count - 1}");
-                }
+                nextNum = firstNum + secondNum;
                 numbers.Add(nextNum);
                 firstNum = secondNum;
                 secondNum = nextNum;
             }
 
-            return (numOfNumbers < 2)?numbers.GetRange(0,1).ToArray():numbers.ToArray();
+            return (numOfNumbers < 2)?numbers.GetRange(0,1):numbers;
         }
     }
 }
