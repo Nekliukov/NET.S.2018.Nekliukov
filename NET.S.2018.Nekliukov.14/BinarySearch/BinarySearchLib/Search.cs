@@ -10,13 +10,13 @@ namespace BinarySearchLib
     {
         #region Public API
         /// <summary>
-        /// Return boolean value, according to existion of an element
-        /// in array, using binary search
+        /// Return index of a value, according to existion of an element
+        /// in array, using binary search or null if it was not found
         /// </summary>
         /// <param name="values">The values.</param>
         /// <param name="value">The value.</param>
         /// <param name="compare">The comparer.</param>
-        /// <returns>Boolean value</returns>
+        /// <returns>Value index or null</returns>
         /// <exception cref="System.ArgumentNullException">Null argument was sent.
         /// Check input data</exception>
         /// <exception cref="System.ArgumentException">
@@ -24,16 +24,11 @@ namespace BinarySearchLib
         /// or
         /// Empty array was sent
         /// </exception>
-        public static bool Binary(T[] values, T value, Comparison<T> compare)
+        public static int? Binary(T[] values, T value, Comparison<T> compare)
         {
             if (values == null || value == null)
             {
                 throw new ArgumentNullException("Null argument was sent. Check input data");
-            }
-
-            if (!IsSorted(values, compare))
-            {
-                throw new ArgumentException("Array is not sorted. Unexpected result");
             }
 
             if (values.Length == 0)
@@ -44,7 +39,7 @@ namespace BinarySearchLib
             if (compare(value, values[0]) < 0 ||
                (compare(value, values[values.Length - 1]) > 0))
             {
-                return false;
+                return null;
             }
 
             return BinaryAlgorithm(values, value, compare);
@@ -58,8 +53,8 @@ namespace BinarySearchLib
         /// <param name="values">The values.</param>
         /// <param name="value">The value.</param>
         /// <param name="compare">The compare.</param>
-        /// <returns>Boolean value</returns>
-        private static bool BinaryAlgorithm(T[] values, T value, Comparison<T> compare)
+        /// <returns>Index of a value or null</returns>
+        private static int? BinaryAlgorithm(T[] values, T value, Comparison<T> compare)
         {
             int first = 0, last = values.Length, middle;
 
@@ -73,7 +68,7 @@ namespace BinarySearchLib
                 }
                 else if (compare(value, values[middle]) == 0)
                 {
-                    return true;
+                    return middle;
                 }
                 else
                 {
@@ -81,28 +76,7 @@ namespace BinarySearchLib
                 }                    
             }
 
-            return false;
-        }
-
-        /// <summary>
-        /// Determines whether the specified values is sorted.
-        /// </summary>
-        /// <param name="values">The values.</param>
-        /// <param name="compare">The compare.</param>
-        /// <returns>
-        /// <c>true</c> if the specified values is sorted; otherwise, <c>false</c>.
-        /// </returns>
-        private static bool IsSorted(T[] values, Comparison<T> compare)
-        {
-            for (int i = 0; i < values.Length - 1; i++)
-            {
-                if (compare(values[i],values[i+1]) > 0)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return null;
         }
         #endregion
     }
