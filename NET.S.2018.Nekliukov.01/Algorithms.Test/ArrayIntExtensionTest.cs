@@ -105,10 +105,10 @@ namespace Algorithms.Test
             int[] expected = { 0, 1, 2, 3, 4 };
 
             // act
-            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
+            ArrayIntExtension.QuickSort(testarr);
 
             // assert
-            CollectionAssert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, testarr);
         }
 
         [TestMethod]
@@ -135,22 +135,21 @@ namespace Algorithms.Test
                 testarr[i] = rand.Next(int.MinValue, int.MaxValue);
             }
 
-            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
-            Assert.IsTrue(IsSorted(actual));
+            ArrayIntExtension.QuickSort(testarr);
+            Assert.IsTrue(IsSorted(testarr));
         }
 
         [TestMethod]
         public void QuickSort_10PosAndNegNumbers_SortedExpected()
         {
             // arrange
-            int[] testarr = { 4, 2, 1, 5, 74, 23, 7, -7, 0, 1 };
-            int[] expected = { -7, 0, 1, 1, 2, 4, 5, 7, 23, 74 };
+            int[] testarr = { 74, 23, 7, -7, 0, 1, 8 };
+            int[] expected = { -7, 0, 1, 7, 8, 23, 74 };
 
-            // act
-            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
+            ArrayIntExtension.QuickSort(testarr);
 
             // assert
-            CollectionAssert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, testarr);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -159,8 +158,7 @@ namespace Algorithms.Test
             // arrange
             int[] testarr = null;
 
-            // act
-            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
+            ArrayIntExtension.QuickSort(testarr);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
@@ -169,8 +167,7 @@ namespace Algorithms.Test
             // arrange
             int[] testarr = { };
 
-            // act
-            int[] actual = Algorithms.ArrayIntExtension.QuickSort(testarr);
+            ArrayIntExtension.QuickSort(testarr);
         }
 
         private bool IsSorted(int[] array)

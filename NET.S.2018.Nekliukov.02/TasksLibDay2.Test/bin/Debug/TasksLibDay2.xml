@@ -10,9 +10,9 @@
             Consist of two algorithms (#1 and #6 tasks) 
             </summary>
         </member>
-        <member name="M:TasksLibDay2.Tasks.FilterDigit(System.Int32[],System.Int32)">
+        <member name="M:TasksLibDay2.Tasks.FilterDigit(System.Int32,System.Int32[])">
             Filter of an int array by existion of choosen digit
-            <param name="initArray">Initial array of numbers </param>
+            <param name="numbers">Collection of numbers </param>
             <param name="digit">Digit, that initial array's numbers must contain </param>
             <returns>Array of filtered numbers </returns>
             <exception cref="T:System.ArgumentNullException">Thrown when null comes as an array</exception>

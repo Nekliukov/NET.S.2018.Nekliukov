@@ -10,12 +10,11 @@ namespace TasksLibDay2.Test
         public void FilterDigit_7RandomNumbers_3FilteredNumbersExpected()
         {
             // arrange
-            int[] test = { 54, 11, 647, 1, -45, 5, 10 };
             int digit = 5;
             int[] expected = { 54, -45, 5 };
 
             // action
-            int[] actual = Tasks.FilterDigit(test, digit);
+            int[] actual = Tasks.FilterDigit(digit, 54, 11, 647, 1, -45, 5, 10);
 
             // assert
             CollectionAssert.AreEqual(expected, actual);
@@ -25,12 +24,11 @@ namespace TasksLibDay2.Test
         public void FilterDigit_7RandomNumbers_EmptyReturnedArrayExpected()
         {
             // arrange
-            int[] test = { 54, 11, 647, 1, 45, 5, 10 };
             int digit = 9;
             int[] expected = { };
 
             // action
-            int[] actual = Tasks.FilterDigit(test, digit);
+            int[] actual = Tasks.FilterDigit(digit, 54, 11, 647, 1, 45, 5, 10);
 
             // assert
             CollectionAssert.AreEqual(expected, actual);
@@ -39,45 +37,37 @@ namespace TasksLibDay2.Test
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
         public void FilterDigit_NullArrayArgument_ArgumentNullExceptionExpected()
         {
-            // arrange
-            int[] test = null;
-            int digit = 5;
-
-            // action
-            int[] actual = Tasks.FilterDigit(test, digit);
+            int[] actual = Tasks.FilterDigit(5, null);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void FilterDigit_EmptyArrayArgument_ArgumentExceptionExpected()
         {
             // arrange
-            int[] test = { };
             int digit = 5;
 
             // action
-            int[] actual = Tasks.FilterDigit(test, digit);
+            int[] actual = Tasks.FilterDigit(digit);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void FilterDigit_7RandomNumbersAndNotDigit_ArgumentOutOfRangeExceptionExpected()
         {
             // arrange
-            int[] test = { 54, 11, 647, 1, 45, 5, 10 };
             int digit = 12;
 
             // action
-            int[] actual = Tasks.FilterDigit(test, digit);
+            int[] actual = Tasks.FilterDigit(digit, 54, 11, 647, 1, 45, 5, 10);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void FilterDigit_7RandomNumbersAndNegativeDigit_ArgumentOutOfRangeExceptionExpected()
         {
             // arrange
-            int[] test = { 54, 11, 647, 1, 45, 5, 10 };
             int digit = -5;
 
             // action
-            int[] actual = Tasks.FilterDigit(test, digit);
+            int[] actual = Tasks.FilterDigit(digit, 54, 11, 647, 1, 45, 5, 10);
         }
 
         ////Tests for InsertNumber

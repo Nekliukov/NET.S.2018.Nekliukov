@@ -14,26 +14,26 @@ namespace Algorithms
         /// <returns>Sorted array</returns>
         /// <exception cref="ArgumentNullException">Thrown when array is null</exception>
         /// <exception cref="ArgumentException">Thrown when array is empty</exception>
-        public static int[] MergeSort(int[] arr)
+        public static int[] MergeSort(int[] array)
         {
-            if (arr == null)
+            if (array == null)
             {
-                throw new ArgumentNullException(nameof(arr));
+                throw new ArgumentNullException($"{nameof(array)} cannot references to null");
             }
 
-            if (arr.Length <= 0)
+            if (array.Length == 0)
             {
-                throw new ArgumentException(nameof(arr));
+                throw new ArgumentException($"{nameof(array)} cannot be empty");
             }
 
-            if (arr.Length == 1)
+            if (array.Length == 1)
             {
-                return arr;
+                return array;
             }
 
-            int middle = arr.Length / 2;
-            int[] left = MergeSort(arr.Take(middle).ToArray());
-            int[] right = MergeSort(arr.Skip(middle).ToArray());
+            int middle = array.Length / 2;
+            int[] left = MergeSort(array.Take(middle).ToArray());
+            int[] right = MergeSort(array.Skip(middle).ToArray());
             return Merge(left, right);
         }
 
@@ -44,37 +44,57 @@ namespace Algorithms
         /// <returns>Sorted array</returns>
         /// <exception cref="ArgumentNullException">Thrown when array is null</exception>
         /// <exception cref="ArgumentException">Thrown when array is empty</exception>
-        public static int[] QuickSort(int[] array)
+        public static void QuickSort(int[] array)
         {
             if (array == null)
             {
-                throw new ArgumentNullException(nameof(array));
+                throw new ArgumentNullException($"{nameof(array)} cannot references to null");
             }
 
             if (array.Length == 0)
             {
-                throw new ArgumentException(nameof(array));
+                throw new ArgumentException($"{nameof(array)} cannot be empty");
             }
 
-            return QuickSort(array, 0, array.Length - 1);
+            QuickSort(array, 0, array.Length - 1);
         }
         #endregion
 
         #region Private methods
         // Main QuickSort method
-        private static int[] QuickSort(int[] array, int start, int end)
+        static void QuickSort(int[] array, int start, int end)
         {
             if (start >= end)
             {
-                return array;
+                return;
             }
 
-            int pivot = Partition(array, start, end);
-            QuickSort(array, start, pivot - 1);
-            QuickSort(array, pivot + 1, end);
-            return array;
-        }
+            int num = array[start];
 
+            int i = start, j = end;
+
+            while (i < j)
+            {
+                while (i < j && array[j] > num)
+                {
+                    j--;
+                }
+
+                array[i] = array[j];
+
+                while (i < j && array[i] < num)
+                {
+                    i++;
+                }
+
+                array[j] = array[i];
+            }
+
+            array[i] = num;
+            QuickSort(array, start, i - 1);
+            QuickSort(array, i + 1, end);
+        }
+  
         // Merging method
         private static int[] Merge(int[] left, int[] right)
         {
@@ -109,27 +129,10 @@ namespace Algorithms
             return result.ToArray();
         }
 
-        // QuickSort par
-        private static int Partition(int[] array, int start, int end)
-        {
-            int temp; // swap helper
-            int marker = start; // divides left and right subarrays
-            for (int i = start; i <= end; i++)
-            {
-                if (array[i] < array[end])  // pivot
-                {
-                    temp = array[marker]; // swap
-                    array[marker] = array[i];
-                    array[i] = temp;
-                    marker += 1;
-                }
-            }
-
-            // put pivot(array[end]) between left and right subarrays
-            temp = array[marker];
-            array[marker] = array[end];
-            array[end] = temp;
-            return marker;
+        private static void Swap(ref int a, ref int b){
+            int temp = a;
+            a = b;
+            b = temp;
         }
         #endregion
     }

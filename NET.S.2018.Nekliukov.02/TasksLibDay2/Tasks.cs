@@ -9,22 +9,23 @@ namespace TasksLibDay2
     /// </summary>
     public static class Tasks
     {
+        #region Public methods
         /// Filter of an int array by existion of choosen digit
-        /// <param name="initArray">Initial array of numbers </param>
+        /// <param name="numbers">Collection of numbers </param>
         /// <param name="digit">Digit, that initial array's numbers must contain </param>
         /// <returns>Array of filtered numbers </returns>
         /// <exception cref="ArgumentNullException">Thrown when null comes as an array</exception>
         /// <exception cref="ArgumentException">Thrown when we get an empty array</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the sencond parametr is 
         /// not a digit (must be 0..9)</exception>
-        public static int[] FilterDigit(int[] initArray, int digit)
+        public static int[] FilterDigit(int digit, params int[] numbers)
         {
-            if (initArray == null)
+            if (numbers == null)
             {
                 throw new ArgumentNullException();
             }
 
-            if (initArray.Length == 0)
+            if (numbers.Length == 0)
             {
                 throw new ArgumentException();
             }
@@ -37,15 +38,15 @@ namespace TasksLibDay2
             // List of future founded numbers
             List<int> result = new List<int>();
             int curNum;
-            for (int i = 0; i < initArray.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
-                curNum = initArray[i];
+                curNum = numbers[i];
                 //// Algorithm of separating number on digits
                 while (curNum != 0)
                 {
                     if (Math.Abs(curNum % 10) == digit)
                     {
-                        result.Add(initArray[i]);
+                        result.Add(numbers[i]);
                         break;
                     }
                     else
@@ -93,7 +94,9 @@ namespace TasksLibDay2
 
             return ConvertToInt(bitsSource);
         }
+        #endregion
 
+        #region Private methods
         // Converts Int32 to bits and reverses it to "higher<-lower"
         // bits format
         private static char[] ConvertTo32bits(int number)
@@ -138,5 +141,6 @@ namespace TasksLibDay2
 
             return Convert.ToInt32(result, 2);
         }
+        #endregion
     }
 }
