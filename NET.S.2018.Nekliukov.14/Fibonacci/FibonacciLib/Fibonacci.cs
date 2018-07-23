@@ -25,18 +25,20 @@ namespace FibonacciLib
             {
                 throw new ArgumentException("Number of elements must be more than 0");
             }
-            List<BigInteger> numbers = new List<BigInteger>(numOfNumbers);
-            BigInteger firstNum = 0, secondNum = 1, nextNum;
-            numbers.Add(firstNum); numbers.Add(secondNum);
-            while (numbers.Count < numOfNumbers)
+
+            IEnumerable<BigInteger> Calculate()
             {
-                nextNum = firstNum + secondNum;
-                numbers.Add(nextNum);
-                firstNum = secondNum;
-                secondNum = nextNum;
+                BigInteger firstNum = 0, secondNum = 1, nextNum;
+                while (numOfNumbers-- != 0)
+                {
+                    yield return firstNum;
+                    nextNum = firstNum + secondNum;
+                    firstNum = secondNum;
+                    secondNum = nextNum;
+                }
             }
 
-            return (numOfNumbers < 2)?numbers.GetRange(0,1):numbers;
+            return Calculate();
         }
     }
 }
