@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace BinarySearchTest
         [TestCase(new int[] { int.MinValue, -2345, -124, 0, 222, 12445, 12445, int.MaxValue }, int.MaxValue, ExpectedResult = 7)]
         [TestCase(new int[] { int.MinValue, -2345, -124, 0, 222, 12445, 12445, int.MaxValue }, 12445, ExpectedResult = 6)]
         public int? TestSearchInt(int[] array, int value)
-            => BinarySearchLib.Search<int>.Binary(array, value, Comparer<int>.Default.Compare);
+            => BinarySearchLib.Search<int>.Binary(array, value);
 
         [TestCase(new double[] { 1.345, 2.12, 3.999, 4.5, 5.0, 6.1, 7.69 }, 2, ExpectedResult = null)]
         [TestCase(new double[] { 1.345, 2.12, 3.999, 4.5, 5.0, 6.1, 7.69 }, 2.12, ExpectedResult = 1)]
@@ -30,8 +31,8 @@ namespace BinarySearchTest
 
         [TestCase(new string[] { "Andrew", "Bart", "Bogdan", "Jeffrey", "John", "Roman", "Zane" }, "Roman", ExpectedResult = 5)]
         [TestCase(new string[] { "Andrew", "Bart", "Bogdan", "Jeffrey", "John", "Roman", "Zane" }, "Albahari", ExpectedResult = null)]
-        public int? TestSearchBool(string[] array, string value)
-            => BinarySearchLib.Search<string>.Binary(array, value, Comparer<string>.Default.Compare);
+        public int? TestSearchStrings(string[] array, string value)
+            => BinarySearchLib.Search<string>.Binary(array, value, Comparer<string>.Default);
 
         [TestCase]
         public void TestSearchCustomClass()

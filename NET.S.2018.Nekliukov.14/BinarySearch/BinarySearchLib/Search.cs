@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BinarySearchLib
 {
@@ -11,7 +12,8 @@ namespace BinarySearchLib
         #region Public API
         /// <summary>
         /// Return index of a value, according to existion of an element
-        /// in array, using binary search or null if it was not found
+        /// in array, using binary search or null if it was not found.
+        /// Delegate realisation!
         /// </summary>
         /// <param name="values">The values.</param>
         /// <param name="value">The value.</param>
@@ -23,8 +25,10 @@ namespace BinarySearchLib
         /// Array is not sorted. Unexpected result
         /// or
         /// Empty array was sent
+        /// or
+        /// Type doesn't implement IComparable
         /// </exception>
-        public static int? Binary(T[] values, T value, Comparison<T> compare)
+        public static int? Binary(T[] values, T value, Comparison<T> compare = null)
         {
             if (values == null || value == null)
             {
@@ -36,15 +40,43 @@ namespace BinarySearchLib
                 throw new ArgumentException("Empty array was sent");
             }
 
-            if (compare(value, values[0]) < 0 ||
-               (compare(value, values[values.Length - 1]) > 0))
+            if (typeof(IComparable<T>).IsAssignableFrom(typeof(T)))
             {
-                return null;
+                compare = Comparer<T>.Default.Compare;
+            }
+            else if(compare == null)
+            {
+                throw new ArgumentException($"Type {typeof(T)} isn't implements IComparable");
             }
 
             return BinaryAlgorithm(values, value, compare);
         }
-        #endregion 
+
+        /// <summary>
+        /// Return index of a value, according to existion of an element
+        /// in array, using binary search or null if it was not found
+        /// Interface reslisation!
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="comparer">The comparer.</param>
+        /// <returns>Value index or null</returns>
+        /// <exception cref="System.ArgumentNullException">Null argument was sent.
+        /// Check input data</exception>
+        /// <exception cref="System.ArgumentException">
+        /// Array is not sorted. Unexpected result
+        /// or
+        /// Empty array was sent
+        /// or
+        /// Type doesn't implement IComparable
+        /// </exception>
+        public static int? Binary(T[] values, T value, IComparer<T> comparer)
+            // It's impossible to create IComparer<T> as an unnecessary argument,
+            // because there is will be 2 same methods with signatures
+            // Binary(T[] values, T value). Compile error.
+            => Binary(values, value, comparer.Compare);
+
+        #endregion
 
         #region Private methods
         /// <summary>
