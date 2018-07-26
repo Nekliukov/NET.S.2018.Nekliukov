@@ -1,30 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BinarySearchTreeTask
-{
+{    
     public class BinarySearchTree<T>
     {
-        public Node<T> root;
-        Comparison<T> comparer;
+        #region Private fields
+        /// <summary>
+        /// Binary search tree root
+        /// </summary>
+        private Node<T> root;
 
-        public BinarySearchTree(T[] initArray, Comparison<T> Comparer = null)
+        /// <summary>
+        /// The comparer for choosen type
+        /// </summary>
+        private Comparison<T> comparer;
+        #endregion
+
+        #region .Ctors
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class.
+        /// </summary>
+        /// <param name="initArray">The initialize array.</param>
+        public BinarySearchTree(T[] initArray) : this(initArray, Comparer<T>.Default.Compare) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class.
+        /// </summary>
+        /// <param name="initArray">The initialize array.</param>
+        /// <param name="Comparer">The comparer.</param>
+        /// <exception cref="InvalidOperationException">Your type doesn't implement IComparable interface</exception>
+        public BinarySearchTree(T[] initArray, Comparison<T> Comparer)
         {
-            if (typeof(IComparable).IsAssignableFrom(typeof(T)) && Comparer == null)
+            if (!typeof(IComparable).IsAssignableFrom(typeof(T)))
             {
-                comparer = Comparer<T>.Default.Compare;
-            }
-            else
-            {
-                comparer = Comparer;
+                throw new InvalidOperationException("Your type doesn't implement IComparable interface");
             }
 
+            comparer = Comparer;
             CreateTree(initArray);
         }
+        #endregion
 
+        #region Public API
+        /// <summary>
+        /// Adds the new node with specified value
+        /// </summary>
+        /// <param name="value">The value.</param>
         public void Add(T value)
         {
             if (root == null)
@@ -33,31 +55,14 @@ namespace BinarySearchTreeTask
                 return;
             }
 
-            Node<T> currNode = root;
-
-            while (true)
-            {
-                if (comparer(value, currNode.value) >= 0)
-                {
-                    if (currNode.rightNode == null)
-                    {
-                        currNode.rightNode = new Node<T>(value);
-                        return;
-                    }
-                    currNode = currNode.rightNode;
-                }
-                else
-                {
-                    if (currNode.leftNode == null)
-                    {
-                        currNode.leftNode = new Node<T>(value);
-                        return;
-                    }
-                    currNode = currNode.leftNode;
-                }
-            }
+            AddNode(value);
         }
 
+        /// <summary>
+        /// Preorder tree traversal
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">root</exception>
         public IEnumerable<T> Preorder()
         {
             if (root == null)
@@ -89,6 +94,11 @@ namespace BinarySearchTreeTask
             return GetOrder(root);
         }
 
+        /// <summary>
+        /// Inorder tree traversal
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">root</exception>
         public IEnumerable<T> Inorder()
         {
             if (root == null)
@@ -121,6 +131,11 @@ namespace BinarySearchTreeTask
             return GetOrder(root);
         }
 
+        /// <summary>
+        /// Postorder tree traversal
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">root</exception>
         public IEnumerable<T> Postorder()
         {
             if (root == null)
@@ -153,7 +168,49 @@ namespace BinarySearchTreeTask
             return GetOrder(root);
         }
 
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
+        public void Clear() => root = null;
 
+        /// <summary>
+        /// Determines whether the specified value is exists.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is exists; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsExists(T value)
+        {
+            bool isFind = false;
+            Node<T> currentNode = root;
+
+            while (currentNode != null || isFind)
+            {
+                if (comparer(value, currentNode.value) == 0)
+                {
+                    isFind = true;
+                    break;
+                }
+                else if (comparer(value,currentNode.value) > 0)
+                {
+                    currentNode = currentNode.rightNode;
+                }
+                else
+                {
+                    currentNode = currentNode.leftNode;
+                }
+            }
+
+            return isFind;
+        }
+        #endregion
+
+        #region Private fields
+        /// <summary>
+        /// Creates the tree.
+        /// </summary>
+        /// <param name="array">The array.</param>
         private void CreateTree(T[] array)
         {
             foreach (T value in array)
@@ -161,19 +218,37 @@ namespace BinarySearchTreeTask
                 Add(value);
             }
         }
-    }
-    
-    public class Node<T>
-    {
-        internal T value;
-        internal Node<T> leftNode;
-        internal Node<T> rightNode;
 
-        internal Node(T Value)
+        /// <summary>
+        /// Adds the node.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        private void AddNode(T value)
         {
-            value = Value;
-            rightNode = null;
-            leftNode = null;
+            Node<T> currNode = root;
+
+            while (true)
+            {
+                if (comparer(value, currNode.value) >= 0)
+                {
+                    if (currNode.rightNode == null)
+                    {
+                        currNode.rightNode = new Node<T>(value);
+                        return;
+                    }
+                    currNode = currNode.rightNode;
+                }
+                else
+                {
+                    if (currNode.leftNode == null)
+                    {
+                        currNode.leftNode = new Node<T>(value);
+                        return;
+                    }
+                    currNode = currNode.leftNode;
+                }
+            }
         }
+        #endregion
     }
 }

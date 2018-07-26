@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using BinarySearchTreeTask;
-using System.Diagnostics;
 
 namespace BinarySearchTreeTest
 {
@@ -33,6 +29,9 @@ namespace BinarySearchTreeTest
             foreach (var item in arr)
                 Console.Write(item + "   ");
             Console.WriteLine();
+
+            Console.WriteLine(bst.IsExists(1111));
+            Console.WriteLine(bst.IsExists(20));
         }
     }
 }
