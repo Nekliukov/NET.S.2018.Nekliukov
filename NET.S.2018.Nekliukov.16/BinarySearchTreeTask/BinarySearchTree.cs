@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace BinarySearchTreeTask
-{    
+{
     public class BinarySearchTree<T>
     {
         #region Private fields
@@ -29,10 +29,23 @@ namespace BinarySearchTreeTask
         /// </summary>
         /// <param name="initArray">The initialize array.</param>
         /// <param name="Comparer">The comparer.</param>
+        /// <exception cref="ArgumentNullException">Null initArray was sent</exception>
+        /// <exception cref="ArgumentException">Empty initArray was sent</exception>
         /// <exception cref="InvalidOperationException">Your type doesn't implement IComparable interface</exception>
         public BinarySearchTree(T[] initArray, Comparison<T> Comparer)
         {
-            if (!typeof(IComparable).IsAssignableFrom(typeof(T)))
+            if (initArray == null)
+            {
+                throw new ArgumentNullException($"Null {nameof(initArray)} was sent");
+            }
+
+            if (initArray.Length == 0)
+            {
+                throw new ArgumentException($"Empty {nameof(initArray)} was sent");
+            }
+
+            if (!typeof(IComparable<T>).IsAssignableFrom(typeof(T)) &&
+                !typeof(IComparable).IsAssignableFrom(typeof(T)))
             {
                 throw new InvalidOperationException("Your type doesn't implement IComparable interface");
             }
@@ -42,13 +55,19 @@ namespace BinarySearchTreeTask
         }
         #endregion
 
-        #region Public API
+        #region Public API       
         /// <summary>
-        /// Adds the new node with specified value
+        /// Adds the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
+        /// <exception cref="ArgumentNullException">"Null value was sent</exception>
         public void Add(T value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException($"Null {nameof(value)} was sent");
+            }
+
             if (root == null)
             {
                 root = new Node<T>(value);
