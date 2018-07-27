@@ -12,14 +12,8 @@ namespace BinarySearchTreeTest
                 {
                     return 0;
                 }
-                else if (lhs.author.Length > rhs.author.Length)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return -1;
-                }
+
+                return lhs.author.Length > rhs.author.Length ? 1 : -1;
             }
         }
     }

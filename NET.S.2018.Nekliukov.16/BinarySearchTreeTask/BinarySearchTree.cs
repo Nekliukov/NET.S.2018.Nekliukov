@@ -1,47 +1,49 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace BinarySearchTreeTask
 {
-    public class BinarySearchTree<T>
+    public class BinarySearchTree<T>: IEnumerable<T>
     {
         #region Private fields
         /// <summary>
         /// Binary search tree root
         /// </summary>
-        private Node<T> root;
+        private Node<T> _root;
 
         /// <summary>
         /// The comparer for choosen type
         /// </summary>
-        private Comparison<T> comparer;
+        private readonly Comparison<T> _comparer;
         #endregion
 
         #region .Ctors
+        /// <inheritdoc />
         /// <summary>
-        /// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class.
+        /// Initializes a new instance of the <see cref="T:BinarySearchTreeTask.BinarySearchTree`1" /> class.
         /// </summary>
         /// <param name="initArray">The initialize array.</param>
-        public BinarySearchTree(T[] initArray) : this(initArray, Comparer<T>.Default.Compare) { }
+        public BinarySearchTree(IEnumerable<T> initArray) : this(initArray, Comparer<T>.Default.Compare) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class.
         /// </summary>
-        /// <param name="initArray">The initialize array.</param>
-        /// <param name="Comparer">The comparer.</param>
+        /// <param name="initCollection">The initialize array.</param>
+        /// <param name="comparer">The comparer.</param>
         /// <exception cref="ArgumentNullException">Null initArray was sent</exception>
         /// <exception cref="ArgumentException">Empty initArray was sent</exception>
         /// <exception cref="InvalidOperationException">Your type doesn't implement IComparable interface</exception>
-        public BinarySearchTree(T[] initArray, Comparison<T> Comparer)
+        public BinarySearchTree(IEnumerable<T> initCollection, Comparison<T> comparer)
         {
-            if (initArray == null)
+            if (initCollection == null)
             {
-                throw new ArgumentNullException($"Null {nameof(initArray)} was sent");
+                throw new ArgumentNullException($"Null {nameof(initCollection)} was sent");
             }
 
-            if (initArray.Length == 0)
+            if (!initCollection.GetEnumerator().MoveNext())
             {
-                throw new ArgumentException($"Empty {nameof(initArray)} was sent");
+                throw new ArgumentException($"Empty {nameof(initCollection)} was sent");
             }
 
             if (!typeof(IComparable<T>).IsAssignableFrom(typeof(T)) &&
@@ -50,8 +52,8 @@ namespace BinarySearchTreeTask
                 throw new InvalidOperationException("Your type doesn't implement IComparable interface");
             }
 
-            comparer = Comparer;
-            CreateTree(initArray);
+            _comparer = comparer;
+            CreateTree(initCollection);
         }
         #endregion
 
@@ -68,9 +70,9 @@ namespace BinarySearchTreeTask
                 throw new ArgumentNullException($"Null {nameof(value)} was sent");
             }
 
-            if (root == null)
+            if (_root == null)
             {
-                root = new Node<T>(value);
+                _root = new Node<T>(value);
                 return;
             }
 
@@ -84,9 +86,9 @@ namespace BinarySearchTreeTask
         /// <exception cref="ArgumentNullException">root</exception>
         public IEnumerable<T> Preorder()
         {
-            if (root == null)
+            if (_root == null)
             {
-                throw new ArgumentNullException($"{nameof(root)} has null reference");
+                throw new ArgumentNullException($"{nameof(_root)} has null reference");
             }
 
             IEnumerable<T> GetOrder(Node<T> node)
@@ -110,7 +112,7 @@ namespace BinarySearchTreeTask
                 }
             }
 
-            return GetOrder(root);
+            return GetOrder(_root);
         }
 
         /// <summary>
@@ -120,9 +122,9 @@ namespace BinarySearchTreeTask
         /// <exception cref="ArgumentNullException">root</exception>
         public IEnumerable<T> Inorder()
         {
-            if (root == null)
+            if (_root == null)
             {
-                throw new ArgumentNullException($"{nameof(root)} has null reference");
+                throw new ArgumentNullException($"{nameof(_root)} has null reference");
             }
 
             IEnumerable<T> GetOrder(Node<T> node)
@@ -147,7 +149,7 @@ namespace BinarySearchTreeTask
                 }
             }
 
-            return GetOrder(root);
+            return GetOrder(_root);
         }
 
         /// <summary>
@@ -157,9 +159,9 @@ namespace BinarySearchTreeTask
         /// <exception cref="ArgumentNullException">root</exception>
         public IEnumerable<T> Postorder()
         {
-            if (root == null)
+            if (_root == null)
             {
-                throw new ArgumentNullException($"{nameof(root)} has null reference");
+                throw new ArgumentNullException($"{nameof(_root)} has null reference");
             }
 
             IEnumerable<T> GetOrder(Node<T> node)
@@ -184,13 +186,13 @@ namespace BinarySearchTreeTask
                 yield return node.value;
             }
 
-            return GetOrder(root);
+            return GetOrder(_root);
         }
 
         /// <summary>
         /// Clears this instance.
         /// </summary>
-        public void Clear() => root = null;
+        public void Clear() => _root = null;
 
         /// <summary>
         /// Determines whether the specified value is exists.
@@ -199,19 +201,19 @@ namespace BinarySearchTreeTask
         /// <returns>
         ///   <c>true</c> if the specified value is exists; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsExists(T value)
+        public bool Contains(T value)
         {
             bool isFind = false;
-            Node<T> currentNode = root;
+            Node<T> currentNode = _root;
 
-            while (currentNode != null || isFind)
+            while (currentNode != null)
             {
-                if (comparer(value, currentNode.value) == 0)
+                if (_comparer(value, currentNode.value) == 0)
                 {
                     isFind = true;
                     break;
                 }
-                else if (comparer(value,currentNode.value) > 0)
+                else if (_comparer(value,currentNode.value) > 0)
                 {
                     currentNode = currentNode.rightNode;
                 }
@@ -230,7 +232,7 @@ namespace BinarySearchTreeTask
         /// Creates the tree.
         /// </summary>
         /// <param name="array">The array.</param>
-        private void CreateTree(T[] array)
+        private void CreateTree(IEnumerable<T> array)
         {
             foreach (T value in array)
             {
@@ -244,11 +246,11 @@ namespace BinarySearchTreeTask
         /// <param name="value">The value.</param>
         private void AddNode(T value)
         {
-            Node<T> currNode = root;
+            Node<T> currNode = _root;
 
             while (true)
             {
-                if (comparer(value, currNode.value) >= 0)
+                if (_comparer(value, currNode.value) >= 0)
                 {
                     if (currNode.rightNode == null)
                     {
@@ -268,6 +270,25 @@ namespace BinarySearchTreeTask
                 }
             }
         }
+
+        #region IEnumerable implemenation        
+        /// <inheritdoc />
+        /// <summary>
+        /// Gets the enumerator.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<T> GetEnumerator() => Inorder().GetEnumerator();
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+        /// </returns>
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        #endregion
+
         #endregion
     }
 }

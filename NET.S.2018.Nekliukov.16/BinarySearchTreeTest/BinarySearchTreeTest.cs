@@ -30,8 +30,14 @@ namespace BinarySearchTreeTest
                 Console.Write(item + "   ");
             Console.WriteLine();
 
-            Console.WriteLine(bst.IsExists(1111));
-            Console.WriteLine(bst.IsExists(20));
+            Console.WriteLine(bst.Contains(1111));
+            Console.WriteLine(bst.Contains(20));
+            Console.WriteLine("Test foreach:");
+            foreach (var item in bst)
+            {
+                Console.Write(item + "   ");
+            }
+
         }
 
         [TestCase(new double[] { 43.45, 1, 0.00053, 0.4, 123, 55.3234351, double.MinValue, double.MaxValue },
