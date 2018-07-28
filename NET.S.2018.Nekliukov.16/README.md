@@ -6,3 +6,5 @@
   
   - пользовательскую структуру Point, для объектов которого не реализовано отношения порядка (использовать подключаемый компаратор).
 2. **(deadline - 27.07.2018, 24.00)** Предложить различные способы (2-3 способа) описания класса TrafficLight (Светофор) для системы управления различными светофорами, соответствующий принципам ООП.
+
+- State pattern: [Realisation](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.16/TrafficLight/StatePattern/StatePatternSolution). [Testing](https://github.com/Nekliukov/NET.S.2018.Nekliukov/blob/master/NET.S.2018.Nekliukov.16/TrafficLight/StatePattern/StatePatternSolutionTest).
