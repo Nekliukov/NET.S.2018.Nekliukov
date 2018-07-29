@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 //using System.Diagnostics.Contracts;
 using Microsoft.CSharp.RuntimeBinder;
 
@@ -13,6 +14,10 @@ namespace MatrixTypes
 
         private T[,] nativeMatrix;
         protected IComparer<T> comparer;
+
+        private delegate void MethodContainer(int a, int b);
+
+        private event MethodContainer onElementChanging;
 
         #endregion
 
@@ -50,7 +55,11 @@ namespace MatrixTypes
         public T this[int indexI, int indexJ]
         {
             get => Value[indexI, indexJ];
-            set => Value[indexI, indexJ] = value;
+            set
+            {
+                Value[indexI, indexJ] = value;
+                onElementChanging?.Invoke(indexI, indexJ);
+            }
         }
 
         #endregion
@@ -92,6 +101,9 @@ namespace MatrixTypes
             this.comparer = comparer;
 
             Value = new T[dimension, dimension];
+
+            ChangeHandler changeHandler = new ChangeHandler();
+            onElementChanging += changeHandler.GenerateMessage;
         }
 
         /// <summary>
@@ -109,7 +121,9 @@ namespace MatrixTypes
         {
             Value = initialMatrix;
             ValidateComparer();
-            this.comparer = comparer;          
+            this.comparer = comparer;
+            ChangeHandler changeHandler = new ChangeHandler();
+            onElementChanging += changeHandler.GenerateMessage;    
         }
 
         #endregion

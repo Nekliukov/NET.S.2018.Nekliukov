@@ -22,7 +22,6 @@ namespace MatrixTypesTest
                 {-8899, 1000, 15, 3},
                 {5, 5, 5, 5},
                 {800, 900, 1000, 87},
-                {800, 900, 1000, 87}
             }
         };
 
@@ -99,6 +98,16 @@ namespace MatrixTypesTest
             SquareMatrix<int> square = new SquareMatrix<int>(initMatrix2);
             SquareMatrix<int> res = diag + square;
             //Assert.IsTrue(true);
+        }
+
+        [Test]
+        public void TestIndexChanging()
+        {
+            SquareMatrix<int> diag = new SquareMatrix<int>(testIntMatrix[1])
+            {
+                [3, 3] = 15,
+                [1, 2] = 1998
+            };
         }
     }      
 }
