@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BankAccountLib
+namespace Holders
 {
     public class AccountHolder
     {
@@ -23,6 +23,12 @@ namespace BankAccountLib
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountHolder"/> class.
+        /// </summary>
+        /// <param name="holderName">Name of the holder.</param>
+        /// <param name="holderSurname">The holder surname.</param>
+        /// <param name="holderEmail">The holder email.</param>
         public AccountHolder(string holderName, string holderSurname, string holderEmail)
         {
             FirstName = holderName;

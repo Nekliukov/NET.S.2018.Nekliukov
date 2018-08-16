@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BankAccountLib;
+﻿using BankAccountLib;
 
-namespace Repository
+namespace BankRepository
 {
-    interface IRepository<T> where T: BankAccount
+    internal interface IRepository
     {
-        T GetByID(string id);
-        void Create();
-        void Save(T acc);
-        void Remove(T acc);
+        BankAccount GetById(string id);
+        void Create(BankAccount acc);
+        //void Update(BankAccount acc);
+        void Delete(string accountId);
     }
 }
