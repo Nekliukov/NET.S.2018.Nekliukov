@@ -1,0 +1,25 @@
+﻿.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row div {
+    float: left;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 32.5vw;
+    padding: 10px;
+}
+
+.first_column {
+    background: thistle;
+}
+
+.second_column {
+    background: lightgreen;
+}
+
+.third_column {
+    background:darksalmon
+}
