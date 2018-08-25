@@ -7,18 +7,17 @@ namespace TasksLibDay2
     /// Main static class for Day2's tasks solutions 
     /// Consist of two algorithms (#1 and #6 tasks) 
     /// </summary>
-    public static class Tasks
+    public static class Tasks<T>
     {
         #region Public methods
         /// Filter of an int array by existion of choosen digit
         /// <param name="numbers">Collection of numbers </param>
-        /// <param name="digit">Digit, that initial array's numbers must contain </param>
-        /// <returns>Array of filtered numbers </returns>
+        /// <param name="predicate">Predicate </returns>
         /// <exception cref="ArgumentNullException">Thrown when null comes as an array</exception>
         /// <exception cref="ArgumentException">Thrown when we get an empty array</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the sencond parametr is 
         /// not a digit (must be 0..9)</exception>
-        public static int[] FilterDigit(int digit, params int[] numbers)
+        public static IEnumerable<T> FilterDigit(Func<T, bool> predicate, params T[] numbers)
         {
             if (numbers == null)
             {
