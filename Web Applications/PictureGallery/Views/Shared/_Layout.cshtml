@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Simple picture gallery</title>
+    @Styles.Render("~/Content/Site.css")
+</head>
+<body>
+    <div class="site-header">
+        <p class="header-text">Picture gallery</p>
+        <a href="#">About</a>
+        <a href="#">Contacts</a>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+</body>
+</html>

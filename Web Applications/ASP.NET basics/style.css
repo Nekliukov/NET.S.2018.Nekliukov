@@ -1,0 +1,51 @@
+﻿.header {
+    background: darkgrey;
+}
+
+.header .logo {
+    float: left;
+    font-size: 40px;    
+}
+
+.header .right-header {
+    float: right;
+    font-size: 20px;
+}
+
+.header .right-header a {
+    padding: 5px;
+    background: blue;
+    color: white;
+    border-radius: 5px;
+}
+
+
+.row {
+    display: inline-block;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row div {
+    float: left;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 32.5vw;
+    padding: 10px;
+}
+
+.first_column {
+    background: thistle;
+}
+
+.second_column {
+    background: lightgreen;
+}
+
+.third_column {
+    background:darksalmon
+}
